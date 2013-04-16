@@ -1,0 +1,9 @@
+## Copy this file to config.yml and change the values to match your setup.
+---
+:gitlab_url: https://gitlab.example.com
+
+# Found in My Profile -> Account -> Private token
+:private_token: super_secret_key_from_gitlab
+
+# If enabled, assume personal (current user) namespace when none specified
+:default_to_personal_namespace: true

@@ -1,0 +1,40 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'thor'
+require File.expand_path('../../lib/gitlab', __FILE__)
+require File.expand_path('../subcommands/snippet', __FILE__)
+
+class MyCLI<Thor
+  desc "projects", "list projects"
+  long_desc <<-D
+    Get a list of projects.  List will only include projects for which you have at least view privileges.
+  D
+  def projects
+    projects = Gitlab::Util.projects
+    projects.each do |p|
+      printf "%s:\t%s\n", p.id, p.path_with_namespace
+    end
+  end
+
+  desc "snippets <project>", "list snippets for a project"
+  long_desc <<-D
+    Get a list of snippets for a particular project. \n
+    <project> may be specified as <namespace>/<project> or <project_id>.  Use 'gitlab projects' to see a list of projects with their namespace and id.
+  D
+  def snippets(project)
+    snippets = Gitlab::Util.snippets(project)
+    snippets.each do |s|
+      printf "%s:\t%s - %s\n", s.id, s.title, s.file_name
+    end
+  end
+
+  desc "snippet <subcommand>", "Perform an action on a snippet"
+  long_desc <<-D
+    Perform an action on a snippet.  To see available subcommands use "gitlab snippet help."
+  D
+  subcommand "snippet", Snippet
+  
+end
+
+MyCLI.start(ARGV)
