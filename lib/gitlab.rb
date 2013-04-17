@@ -10,7 +10,7 @@ require File.expand_path('../gitlab/util', __FILE__)
 
 class Gitlab
   def initialize
-    config = "config.yml"
+    config = File.expand_path('../../config.yml',__FILE__)
 
     Config.load(config)
   end
