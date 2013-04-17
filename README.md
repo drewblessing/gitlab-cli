@@ -8,22 +8,28 @@ Note: All command results are subject to user authorization.  For example, if th
 Note2: Anywhere you see [PROJECT] you can either specify the full namespace/project name for the project or you can provide the project ID.  Both can be obtained by running the first command below.
 
 _List all projects_
+
 `gitlab projects`
 
 _List all snippets for a project_
+
 `gitlab snippets [PROJECT]`
 
 _View a snippet (Uses default pager or "less")_
+
 `gitlab snippet view [PROJECT] [SNIPPET_ID]`
 
 _Edit a snippet (Users default editor or "vi")_
+
 `gitlab snippet edit [PROJECT] [SNIPPET_ID]`
 
 _Add a snippet_
+
 `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
 `cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
 
 _Delete a snippet (Asks for confirmation)_
+
 `gitlab snippet delete [PROJECT] [SNIPPET_ID]`
 
 ## Project Setup
