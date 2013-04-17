@@ -1,6 +1,6 @@
 # _GitLab CLI Tool_
 
-_This tool allows you to interact with GitLab from the command line. Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
+_Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
 ## Project Setup
 
@@ -30,7 +30,7 @@ If you encounter issues with this project, please find help via one of these ave
 
 ## Contributing changes
 
-I welcome all contributions.  If you would like to include a new feature or bug fix, simple open a pull request and explain the problem or feature you contributed. I will review the contribution at that point.  If you want to discuss fixes or improvements before submitting a pull request, please find me on IRC #gitlab on Freenode or open a GitHub issue.
+I welcome all contributions.  If you would like to include a new feature or bug fix, simply open a pull request and explain the problem or feature you contributed. I will review the contribution at that point.  If you want to discuss fixes or improvements before submitting a pull request, please find me on IRC #gitlab on Freenode or open a GitHub issue.
 
 ## License
 Without all the official "legal" mumbo-jumbo, you are free to use this tool as you wish.  You can modify it, distribute it, or do anything else you want with it as long as you retain credit to any contributors.  Contributors include myself and any developers who provide fixes or improvements via pull requesets back to the original repository.
