@@ -18,8 +18,8 @@ class Gitlab
 
     private
     def get_view_url
-      project_with_namespace = Gitlab::Util.get_project_with_namespace(@project_id)
-      URI.join(Config[:gitlab_url],"%s/snippets/%s" % [project_with_namespace,@id.to_s])
+      project_path_with_namespace = Gitlab::Util.get_project_path_with_namespace(@project_id)
+      URI.join(Config[:gitlab_url],"%s/snippets/%s" % [project_path_with_namespace,@id.to_s])
     end
   end
 end

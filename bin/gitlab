@@ -17,19 +17,21 @@ class MyCLI<Thor
     end
   end
 
-  desc "snippets <project>", "list snippets for a project"
+  desc "snippets [PROJECT]", "list snippets for a project"
   long_desc <<-D
     Get a list of snippets for a particular project. \n
-    <project> may be specified as <namespace>/<project> or <project_id>.  Use 'gitlab projects' to see a list of projects with their namespace and id.
+    
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.
   D
   def snippets(project)
     snippets = Gitlab::Util.snippets(project)
     snippets.each do |s|
       printf "%s:\t%s - %s\n", s.id, s.title, s.file_name
     end
+    puts "This project does not have any snippets.\n" if snippets.size == 0
   end
 
-  desc "snippet <subcommand>", "Perform an action on a snippet"
+  desc "snippet [SUBCOMMAND]", "Perform an action on a snippet"
   long_desc <<-D
     Perform an action on a snippet.  To see available subcommands use "gitlab snippet help."
   D

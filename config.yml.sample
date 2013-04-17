@@ -4,6 +4,3 @@
 
 # Found in My Profile -> Account -> Private token
 :private_token: super_secret_key_from_gitlab
-
-# If enabled, assume personal (current user) namespace when none specified
-:default_to_personal_namespace: true
