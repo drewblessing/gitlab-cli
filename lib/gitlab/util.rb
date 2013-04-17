@@ -177,11 +177,11 @@ class Gitlab
     # Check RestClient response code
     private
     def self.check_response_code(response)
-      if response =~ '401'
+      if response =~ /401/
         ## Unauthorized
         STDERR.puts "User token was not present or is not valid."
         exit 1
-      elsif response =~ '403'
+      elsif response =~ /403/
         ## Forbidden
         STDERR.puts "You are not authorized to complete this action"
         exit 1
@@ -189,15 +189,15 @@ class Gitlab
         ## Not found
         STDERR.puts "Resource could not be found."
         exit 1
-      elsif response =~ '405'
+      elsif response =~ /405/
         ## Method not allowed
         STDERR.puts "This request is not supported."
         exit 1
-      elsif response =~ '409'
+      elsif response =~ /409/
         ## Conflicting resource
         STDERR.puts "A conflicting resource already exists."
         exit 1
-      elsif response =~ '500'
+      elsif response =~ /500/
         ## Server error
         STDERR.puts "Oops.  Something went wrong. Please try again."
       end
