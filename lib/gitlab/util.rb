@@ -32,7 +32,7 @@ class Gitlab
 
       data = JSON.parse(response)
       snippets = data.map do |s|
-        Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id)
+        Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
       end
     end
 
@@ -49,7 +49,7 @@ class Gitlab
         check_response_code(e.response)
       end
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id)
+      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - Create
@@ -80,7 +80,7 @@ class Gitlab
         check_response_code(e.response)
       end
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id)
+      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - View
@@ -114,7 +114,7 @@ class Gitlab
       end
 
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id)
+      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - Delete

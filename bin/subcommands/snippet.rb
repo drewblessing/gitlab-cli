@@ -100,6 +100,7 @@ class Snippet < Thor
     printf "Snippet ID: %s\n", snippet.id
     printf "Title: %s\n", snippet.title
     printf "File Name: %s\n", snippet.file_name
+    printf "Author: %s <%s>\n", snippet.author.name, snippet.author.email
     printf "Created at: %s\n", Time.parse(snippet.created_at)
     printf "Updated at: %s\n", Time.parse(snippet.updated_at)
     printf "Expires at: %s\n", snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)
