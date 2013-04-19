@@ -87,5 +87,22 @@ class Snippet < Thor
 
     printf "Successfully deleted the snippet."
   end
+
+  ## INFO
+  desc "info [PROJECT] [SNIPPET_ID]", "view detailed info for a snippet"
+  long_desc <<-D
+    View detailed information about a snippet.\n
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [SNIPPET_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
+  D
+  def info(project, snippet)
+    snippet = Gitlab::Util.snippet_get(project, snippet)
+
+    printf "Snippet ID: %s\n", snippet.id
+    printf "Title: %s\n", snippet.title
+    printf "File Name: %s\n", snippet.file_name
+    printf "Created at: %s\n", Time.parse(snippet.created_at)
+    printf "Updated at: %s\n", Time.parse(snippet.updated_at)
+    printf "Expires at: %s\n", snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)
+  end
 end
 
