@@ -19,7 +19,7 @@ class Gitlab
       @created_at = created_at
       @project_url = get_project_url
 
-      @owner = owner.class == 'Gitlab::User' ? owner : parse_owner(owner)
+      @owner = owner.class == 'Gitlab::User' || owner.nil? ? owner : parse_owner(owner)
     end
 
     private

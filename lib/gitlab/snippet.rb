@@ -15,7 +15,7 @@ class Gitlab
       @project_id = project_id
       @view_url = get_view_url
 
-      @author = author.class == 'Gitlab::User' ? author : parse_author(author)
+      @author = author.class == 'Gitlab::User' || author.nil? ? author : parse_author(author)
     end
 
     private

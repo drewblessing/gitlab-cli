@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+require 'shellwords'
+
 class Snippet < Thor
   # ADD
   desc "add [PROJECT] [FILE]", "add a snippet"
@@ -35,7 +37,7 @@ class Snippet < Thor
 
     pager = ENV['pager'] || 'less'
 
-    unless system("echo %s | %s" % [snippet.inspect, pager])
+    unless system("echo %s | %s" % [Shellwords.escape(snippet.inspect), pager])
       STDERR.puts "Problem displaying snippet"
       exit 1
     end
