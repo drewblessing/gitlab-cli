@@ -73,7 +73,7 @@ class Snippet < Thor
   desc "delete [PROJECT] [SNIPPET_ID]", "delete a snippet"
   long_desc <<-D
     Delete a snippet. \n
-    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [SNIPPET_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
 
     $ gitlab snippet delete namespace/project 6
 
@@ -92,7 +92,7 @@ class Snippet < Thor
   desc "info [PROJECT] [SNIPPET_ID]", "view detailed info for a snippet"
   long_desc <<-D
     View detailed information about a snippet.\n
-    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [SNIPPET_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def info(project, snippet)
     snippet = Gitlab::Util.snippet_get(project, snippet)
