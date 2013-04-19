@@ -4,6 +4,7 @@ require 'rubygems'
 require 'thor'
 require File.expand_path('../../lib/gitlab', __FILE__)
 require File.expand_path('../subcommands/snippet', __FILE__)
+require File.expand_path('../subcommands/project', __FILE__)
 
 class MyCLI<Thor
   desc "projects", "list projects"
@@ -31,11 +32,17 @@ class MyCLI<Thor
     puts "This project does not have any snippets.\n" if snippets.size == 0
   end
 
-  desc "snippet [SUBCOMMAND]", "Perform an action on a snippet"
+  desc "snippet [SUBCOMMAND]", "perform an action on a snippet"
   long_desc <<-D
-    Perform an action on a snippet.  To see available subcommands use "gitlab snippet help."
+    Perform an action on a snippet. To see available subcommands use 'gitlab snippet help.'
   D
   subcommand "snippet", Snippet
+
+  desc "project [SUBCOMMAND]", "perform an action on a project"
+  long_desc <<-D
+    Perform an action on a project. To see available subcommands use 'gitlab project help.' 
+  D
+  subcommand "project", Project
   
 end
 

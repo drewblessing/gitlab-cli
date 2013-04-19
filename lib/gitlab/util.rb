@@ -18,6 +18,24 @@ class Gitlab
       end
     end
 
+    ## Project
+    # Project - Get project object
+    def self.project_get(project)
+      gitlab = Gitlab.new
+
+      id = numeric?(project) ? project : get_project_id(project)
+      url = "api/v3/projects/%s%s" % [id,url_token]
+
+      begin
+        response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+      rescue Exception => e
+        check_response_code(e.response)
+      end
+
+      data = JSON.parse(response)
+      Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
+    end
+
     ## Snippets
     def self.snippets(project)
       gitlab = Gitlab.new

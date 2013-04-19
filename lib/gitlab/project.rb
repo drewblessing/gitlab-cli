@@ -1,10 +1,10 @@
-require 'rest_client'
+require File.expand_path('../user', __FILE__)
 
 class Gitlab
   class Project
-    attr_accessor :id, :name, :description, :default_branch, :public, :path, :path_with_namespace, :issues_enabled, :merge_requests_enabled, :wall_enabled, :wiki_enabled, :created_at
+    attr_accessor :id, :name, :description, :default_branch, :public, :path, :path_with_namespace, :issues_enabled, :merge_requests_enabled, :wall_enabled, :wiki_enabled, :created_at, :project_url, :owner
 
-    def initialize(id, name, description, default_branch, public, path, path_with_namespace, issues_enabled, merge_requests, wall_enabled, wiki_enabled, created_at)
+    def initialize(id, name, description, default_branch, public, path, path_with_namespace, issues_enabled, merge_requests_enabled, wall_enabled, wiki_enabled, created_at, owner=nil)
       @id = id
       @name = name
       @description = description
@@ -12,13 +12,26 @@ class Gitlab
       @public = public
       @path = path
       @path_with_namespace = path_with_namespace
-      @issue_enabled = issues_enabled
-      @merge_requests = merge_requests
+      @issues_enabled = issues_enabled
+      @merge_requests_enabled = merge_requests_enabled
       @wall_enabled = wall_enabled 
       @wiki_enabled = wiki_enabled
       @created_at = created_at
+      @project_url = get_project_url
+
+      @owner = owner.class == 'Gitlab::User' ? owner : parse_owner(owner)
     end
 
+    private
+    def get_project_url
+      URI.join(Config[:gitlab_url],@path_with_namespace)
+    end    
+
+    private
+    def parse_owner(owner)
+      Gitlab::User.new(owner['id'],owner['username'],owner['email'],owner['name'],owner['blocked'],owner['created_at'])
+    end
+    
   end
 end
 
