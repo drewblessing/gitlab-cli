@@ -87,7 +87,7 @@ class Snippet < Thor
 
     snippet = Gitlab::Util.snippet_delete(project, snippet)
 
-    printf "Successfully deleted the snippet."
+    printf "Successfully deleted the snippet.\n"
   end
 
   ## INFO

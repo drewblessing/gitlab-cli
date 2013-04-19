@@ -141,11 +141,7 @@ class Gitlab
 
       id = numeric?(project) ? project : get_project_id(project)
       
-      begin
-        snippet_get = snippet_get(project, snippet)
-      rescue Exception => e
-        check_response_code(e.response)
-      end
+      snippet_get = snippet_get(project, snippet)
 
       if snippet_get
         begin 
