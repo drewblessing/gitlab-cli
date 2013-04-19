@@ -23,6 +23,10 @@ _Edit a snippet (Users default editor or "vi")_
 
 `gitlab snippet edit [PROJECT] [SNIPPET_ID]`
 
+_View detailed information about a snippet_
+
+`gitlab snippet info [PROJECT] [SNIPPET_ID]`
+
 _Add a snippet_
 
 `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
