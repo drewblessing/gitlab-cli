@@ -67,4 +67,4 @@ If you encounter issues with this project, please find help via one of these ave
 I welcome all contributions.  If you would like to include a new feature or bug fix, simply open a pull request and explain the problem or feature you contributed. I will review the contribution at that point.  If you want to discuss fixes or improvements before submitting a pull request, please find me on IRC #gitlab on Freenode or open a GitHub issue.
 
 ## License
-Without all the official "legal" mumbo-jumbo, you are free to use this tool as you wish.  You can modify it, distribute it, or do anything else you want with it as long as you retain credit to any contributors.  Contributors include myself and any developers who provide fixes or improvements via pull requesets back to the original repository.
+See LICENSE file.
