@@ -2,6 +2,12 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
+## GitLab Versions
+
+This tool has only been tested with the following versions of GitLab.  Some or all of the features may or may not work with other versions but they are not supported.
+
+* 5.0.x
+
 ## Project Setup
 
 _How do I get started?_ 
