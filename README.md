@@ -56,6 +56,7 @@ Expires at: Never
 ### _Add a snippet_
 
 `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
+
 `cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
 
 ### _Delete a snippet (Asks for confirmation)_
@@ -66,6 +67,7 @@ Expires at: Never
 Note: The "save" subcommand is an alias of "download." Both have the same effect.
 
 `gitlab snippet download [PROJECT] [SNIPPET_ID] [FILE]`
+
 `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
 
 ## Project Setup
