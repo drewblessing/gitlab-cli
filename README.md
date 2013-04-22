@@ -7,42 +7,66 @@ Note: All command results are subject to user authorization.  For example, if th
 
 Note2: Anywhere you see [PROJECT] you can either specify the full namespace/project name for the project or you can provide the project ID.  Both can be obtained by running the first command below.
 
-_List all projects_
+### _List all projects_
 
 `gitlab projects`
 
 Example output:
-```3:	 project1
+```
+3:	globalproject1
 4:	namespace1/project2
 6:	namespace1/project3
 11:	namespace2/project1
 13:	user1/project1
 ```
 
-_List all snippets for a project_
+### _List all snippets for a project_
 
 `gitlab snippets [PROJECT]`
 
-_View a snippet (Uses default pager or "less")_
+Example output:
+```
+2:  Title - Filename
+16:	README - README.md
+```
+
+### _View a snippet (Uses default pager or "less")_
 
 `gitlab snippet view [PROJECT] [SNIPPET_ID]`
 
-_Edit a snippet (Users default editor or "vi")_
+### _Edit a snippet (Users default editor or "vi")_
 
 `gitlab snippet edit [PROJECT] [SNIPPET_ID]`
 
-_View detailed information about a snippet_
+### _View detailed information about a snippet_
 
 `gitlab snippet info [PROJECT] [SNIPPET_ID]`
 
-_Add a snippet_
+Example output:
+```
+Snippet ID: 16
+Title: README
+File Name: README.md
+Author: John Doe <john.doe@example.com>
+Created at: Fri Apr 19 01:11:08 UTC 2013
+Updated at: Fri Apr 19 01:11:08 UTC 2013
+Expires at: Never
+```
+
+### _Add a snippet_
 
 `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
 `cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
 
-_Delete a snippet (Asks for confirmation)_
+### _Delete a snippet (Asks for confirmation)_
 
 `gitlab snippet delete [PROJECT] [SNIPPET_ID]`
+
+### _Save a snippet to your local filesystem_
+Note: The "save" subcommand is an alias of "download." Both have the same effect.
+
+`gitlab snippet download [PROJECT] [SNIPPET_ID] [FILE]`
+`gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
 
 ## Project Setup
 

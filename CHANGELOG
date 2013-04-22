@@ -1,0 +1,7 @@
+2013-04-21  Drew Blessing
+  * Issue 3: Add option to save a snippet file locally
+  * Issue 4: Fix subcommand usage print out
+  * Issue 5: Improve examples in README
+
+2013-04-19  Drew Blessing 
+  * Initial release

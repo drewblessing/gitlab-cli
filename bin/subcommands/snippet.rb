@@ -115,7 +115,7 @@ class Snippet < Thor
   end
 
   ## DOWNLOAD
-  desc "download|save [PROJECT] [SNIPPET_ID] [FILE_PATH]", "download/save a snippet locally"
+  desc "download|save [PROJECT] [SNIPPET_ID] [FILE]", "download/save a snippet locally"
   long_desc <<-D
     Download/Save the contents of a snippet in a local file\n
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
