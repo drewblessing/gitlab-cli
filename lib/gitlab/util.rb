@@ -8,6 +8,9 @@ class Gitlab
       gitlab = Gitlab.new
       begin 
         response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects#{url_token}").to_s
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -28,6 +31,9 @@ class Gitlab
 
       begin
         response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -44,6 +50,9 @@ class Gitlab
 
       begin 
         response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets#{url_token}").to_s
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -63,6 +72,9 @@ class Gitlab
 
       begin 
         response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -94,6 +106,9 @@ class Gitlab
 
       begin 
         response = RestClient.post URI.join(Config[:gitlab_url],url).to_s, payload
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -111,6 +126,9 @@ class Gitlab
 
       begin 
         response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -127,6 +145,9 @@ class Gitlab
 
       begin 
         response = RestClient.put URI.join(Config[:gitlab_url],url).to_s, payload
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
       rescue Exception => e
         check_response_code(e.response)
       end
@@ -140,10 +161,15 @@ class Gitlab
       gitlab = Gitlab.new
 
       id = numeric?(project) ? project : get_project_id(project)
+
+      snippet_get = snippet_get(project, snippet)
       
       if snippet_get
         begin 
           response = RestClient.delete URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
+        rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
         rescue Exception => e
           check_response_code(e.response)
         end

@@ -3,6 +3,8 @@
   * Issue 4: Fix subcommand usage print out
   * Issue 5: Improve examples in README
   * Issue 6: Move project setup to top of README
+  * Issue 7: Improve error handling for times when Gitlab is not accessible
+  * Issue 8: Fix regression introduced in commit 4b5397dfce9af738156e8343dbca4bba56fc84d1
 
 2013-04-19  Drew Blessing 
   * Initial release
