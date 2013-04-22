@@ -7,7 +7,7 @@ Note: All command results are subject to user authorization.  For example, if th
 
 Note2: Anywhere you see [PROJECT] you can either specify the full namespace/project name for the project or you can provide the project ID.  Both can be obtained by running the first command below.
 
-*_List all projects_
+### _List all projects_
 
 `gitlab projects`
 
