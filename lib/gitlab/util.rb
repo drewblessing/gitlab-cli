@@ -168,8 +168,8 @@ class Gitlab
         begin 
           response = RestClient.delete URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
         rescue SocketError => e
-        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
-        exit 1
+          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          exit 1
         rescue Exception => e
           check_response_code(e.response)
         end
