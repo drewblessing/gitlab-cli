@@ -3,6 +3,12 @@
 require 'shellwords'
 
 class Snippet < Thor
+  map "save" => "download"
+
+  def self.banner(task, namespace = true, subcommand = true)
+    "#{basename} #{task.formatted_usage(self, true, subcommand)}"
+  end
+  
   # ADD
   desc "add [PROJECT] [FILE]", "add a snippet"
   long_desc <<-D
@@ -106,6 +112,18 @@ class Snippet < Thor
     printf "Created at: %s\n", Time.parse(snippet.created_at)
     printf "Updated at: %s\n", Time.parse(snippet.updated_at)
     printf "Expires at: %s\n", snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)
+  end
+
+  ## DOWNLOAD
+  desc "download|save [PROJECT] [SNIPPET_ID] [FILE_PATH]", "download/save a snippet locally"
+  long_desc <<-D
+    Download/Save the contents of a snippet in a local file\n
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
+  D
+  def download(project, snippet, file_path)
+    snippet = Gitlab::Util.snippet_download(project, snippet, file_path)
+
+    puts "Snippet file saved successfully.\n"
   end
 end
 

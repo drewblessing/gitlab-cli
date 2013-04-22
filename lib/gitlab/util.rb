@@ -102,12 +102,12 @@ class Gitlab
     end
 
     # Snippet - View
-    def self.snippet_view(project, snippet_id)
+    def self.snippet_view(project, snippet)
       gitlab = Gitlab.new
 
       id = numeric?(project) ? project : get_project_id(project)
 
-      url = "api/v3/projects/%s/snippets/%s/raw%s" % [id, snippet_id, url_token]
+      url = "api/v3/projects/%s/snippets/%s/raw%s" % [id, snippet, url_token]
 
       begin 
         response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
@@ -141,14 +141,30 @@ class Gitlab
 
       id = numeric?(project) ? project : get_project_id(project)
       
-      snippet_get = snippet_get(project, snippet)
-
       if snippet_get
         begin 
           response = RestClient.delete URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
         rescue Exception => e
           check_response_code(e.response)
         end
+      end
+    end
+
+    # /snippet - Download/Save
+    def self.snippet_download(project, snippet, file_path)
+      gitlab = Gitlab.new
+
+      id = numeric?(project) ? project : get_project_id(project)
+      snippet_content = snippet_view(project, snippet)
+      
+      begin
+        File.open(file_path, 'w') { |file| file.write(snippet_content) }
+      rescue IOError => e
+        STDERR.puts "Cannot save snippet as file. Please check permissions for %s" % [file_path]
+        exit 1
+      rescue Errno::ENOENT => e
+        STDERR.puts "Specified directory does not exist.  Directory must exist to save the snippet file."
+        exit 1
       end
     end
 

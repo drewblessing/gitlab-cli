@@ -1,6 +1,10 @@
 #!/usr/bin/ruby
 
 class Project < Thor
+  def self.banner(task, namespace = true, subcommand = true)
+    "#{basename} #{task.formatted_usage(self, true, subcommand)}"
+  end
+
   ## INFO
   desc "info [PROJECT]", "view detailed info for a project"
   long_desc <<-D
