@@ -2,6 +2,25 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
+## Project Setup
+
+_How do I get started?_ 
+
+1. _Clone this repo._
+2. _Make sure you have bundler installed. `gem install bundler`_
+3. _Run `bundle install` in the root of the repository._
+4. _Copy config.yml.sample to config.yml and edit the configuration as appropriate._
+5. _Add the repo bin path to your environment PATH variable._
+
+_How can I find the private token for my user?_
+
+Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  Copy the private token from the box and paste into your config.  
+
+_How can I add the repo bin path to my environment PATH variable?_
+
+Place it in your ~/.bash_profile file.  You should end up with something like this:
+`export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
+
 ## Commands
 Note: All command results are subject to user authorization.  For example, if the command says it will return all projects it will return all projects...that the user is able to see.
 
@@ -110,25 +129,6 @@ Usage 2: `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
 Using project ID: `gitlab snippet save 13 16 /path/for/new/file`
 
 Using project full namespace/project format: `gitlab snippet download user1/project1 16 /path/for/new/file`
-
-## Project Setup
-
-_How do I get started?_ 
-
-1. _Clone this repo._
-2. _Make sure you have bundler installed. `gem install bundler`_
-3. _Run `bundle install` in the root of the repository._
-4. _Copy config.yml.sample to config.yml and edit the configuration as appropriate._
-5. _Add the repo bin path to your environment PATH variable._
-
-_How can I find the private token for my user?_
-
-Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  Copy the private token from the box and paste into your config.  
-
-_How can I add the repo bin path to my environment PATH variable?_
-
-Place it in your ~/.bash_profile file.  You should end up with something like this:
-`export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
 
 ## Issues
 
