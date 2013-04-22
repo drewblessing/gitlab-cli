@@ -12,7 +12,8 @@ _List all projects_
 `gitlab projects`
 
 Example output:
-```3:	 project1
+```
+3:	 project1
 4:	namespace1/project2
 6:	namespace1/project3
 11:	namespace2/project1
