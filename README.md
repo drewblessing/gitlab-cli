@@ -22,7 +22,11 @@ Example output:
 
 ### _List all snippets for a project_
 
-`gitlab snippets [PROJECT]`
+Usage: `gitlab snippets [PROJECT]`
+
+Using project ID: `gitlab snippets 13`
+
+Using project full namespace/project format: `gitlab snippets user1/project1`
 
 Example output:
 ```
@@ -32,15 +36,33 @@ Example output:
 
 ### _View a snippet (Uses default pager or "less")_
 
-`gitlab snippet view [PROJECT] [SNIPPET_ID]`
+Usage: `gitlab snippet view [PROJECT] [SNIPPET_ID]`
+
+Using project ID: `gitlab snippet view 13 16`
+
+Using project full namespace/project format: `gitlab snippet view user1/project1 16`
 
 ### _Edit a snippet (Users default editor or "vi")_
 
-`gitlab snippet edit [PROJECT] [SNIPPET_ID]`
+Usage: `gitlab snippet edit [PROJECT] [SNIPPET_ID]`
+
+Using project ID: `gitlab snippet edit 13 16`
+
+Using project full namespace/project format: `gitlab snippet edit user1/project1 16`
+
+Example output:
+```
+Snippet updated.
+ URL: https://gitlab.example.com/user1/project1/snippets/16
+```
 
 ### _View detailed information about a snippet_
 
-`gitlab snippet info [PROJECT] [SNIPPET_ID]`
+Usage :`gitlab snippet info [PROJECT] [SNIPPET_ID]`
+
+Using project ID: `gitlab snippet info 13 16`
+
+Using project full namespace/project format: `gitlab snippet info user1/project1 16`
 
 Example output:
 ```
@@ -55,20 +77,39 @@ Expires at: Never
 
 ### _Add a snippet_
 
-`gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
+Usage 1: `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
 
-`cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
+Usage 2: `cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
+
+Using project ID: `gitlab snippet add 13 16 /path/to/file -t "Awesome title" -n file.txt`
+
+Using project full namespace/project format: `gitlab snippet add user1/project1 16 /path/to/file -t "Awesome title" -n file.txt``
+
+Example output:
+```
+Snippet created.
+ID: 20
+URL: https://gitlab.example.com/user1/project1/snippets/20
+```
 
 ### _Delete a snippet (Asks for confirmation)_
 
-`gitlab snippet delete [PROJECT] [SNIPPET_ID]`
+Usage: `gitlab snippet delete [PROJECT] [SNIPPET_ID]`
+
+Using project ID: `gitlab snippet delete 13 16`
+
+Using project full namespace/project format: `gitlab snippet delete user1/project1 16`
 
 ### _Save a snippet to your local filesystem_
 Note: The "save" subcommand is an alias of "download." Both have the same effect.
 
-`gitlab snippet download [PROJECT] [SNIPPET_ID] [FILE]`
+Usage 1: `gitlab snippet download [PROJECT] [SNIPPET_ID] [FILE]`
 
-`gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
+Usage 2: `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
+
+Using project ID: `gitlab snippet save 13 16 /path/for/new/file`
+
+Using project full namespace/project format: `gitlab snippet download user1/project1 16 /path/for/new/file`
 
 ## Project Setup
 
