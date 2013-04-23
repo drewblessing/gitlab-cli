@@ -46,6 +46,28 @@ Example output:
 13:	user1/project1
 ```
 
+### _View detailed information about a project_
+
+`gitlab project info [PROJECT]`
+
+Example output:
+```
+Project ID: 3
+Name: My Project
+Path w/ Namespace: namespace1/myproject
+Project URL: https://gitlab.example.com/namespace1/myproject
+Description: This is my awesome repo!
+Default Branch: master
+Owner: Drew Blessing <drew.blessing@example.com>
+Public?: false
+Issues enabled?: false
+Merge Requests enabled?: true
+Wall enabled?: false
+Wiki enabled?: false
+Created at: Mon Apr 01 18:42:38 UTC 2013
+
+```
+
 ### _List all snippets for a project_
 
 Usage: `gitlab snippets [PROJECT]`
