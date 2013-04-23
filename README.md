@@ -6,6 +6,7 @@ _Many people prefer to work from the CLI when possible. This tool aims to bring 
 
 This tool has only been tested with the following versions of GitLab.  Some or all of the features may or may not work with other versions but they are not _officially_ supported.
 
+* 5.1.0
 * 5.0.x
 
 ## Project Setup

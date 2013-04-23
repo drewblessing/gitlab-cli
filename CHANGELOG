@@ -1,3 +1,7 @@
+2013-04-22 Drew Blessing
+  * Issue 10: Test against Gitlab 5.1
+  * Version 1.0.0: Tag version 1.0.0
+
 2013-04-21  Drew Blessing
   * Issue 3: Add option to save a snippet file locally
   * Issue 4: Fix subcommand usage print out
