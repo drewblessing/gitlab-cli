@@ -38,10 +38,23 @@ class MyCLI<Thor
   D
   def snippets(project)
     snippets = Gitlab::Util.snippets(project)
+    formatted_snippets = ""
+    pager = ENV['pager'] || 'less'
+
     snippets.each do |s|
-      printf "%s:\t%s - %s\n", s.id, s.title, s.file_name
+      formatted_snippets << "%s:\t%s - %s\n" % [s.id, s.title, s.file_name]
     end
     puts "This project does not have any snippets.\n" if snippets.size == 0
+
+    if Gitlab::Config[:display_lists_in_pager]
+      unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
+        STDERR.puts "Problem displaying snippets in pager"
+        exit 1
+      end
+    else 
+      puts formatted_snippets
+    end
+
   end
 
   desc "snippet [SUBCOMMAND]", "perform an action on a snippet"

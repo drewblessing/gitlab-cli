@@ -6,12 +6,14 @@ class Gitlab
     ## Projects
     def self.projects
       gitlab = Gitlab.new
+
       begin 
         response = Array.new
         page = 1
         while true do
           url = "api/v3/projects%s&page=%s&per_page=100" % [url_token, page]
           page_data = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+          # Length of 2 indicates empty Array (represented as a string)
           break if page_data.length == 2
           response.concat JSON.parse(page_data)
           page += 1
@@ -25,6 +27,35 @@ class Gitlab
 
       projects = response.map do |p|
         Project.new(p['id'],p['name'],p['description'],p['default_branch'],p['public'],p['path'],p['path_with_namespace'],p['issues_enabled'],p['merge_requests_enabled'],p['wall_enabled'],p['wiki_enabled'],p['created_at'],p['owner'])
+      end
+    end
+    
+    ## Snippets
+    def self.snippets(project)
+      gitlab = Gitlab.new
+
+      id = numeric?(project) ? project : get_project_id(project)
+
+      begin 
+        response = Array.new
+        page = 1
+        while true do
+          url = "api/v3/projects/%s/snippets%s&page=%s&per_page=100" % [id, url_token, page]
+          page_data = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+          # Length of 2 indicates empty Array (represented as a string)
+          break if page_data.length == 2         
+          response.concat JSON.parse(page_data)
+          page += 1
+        end
+      rescue SocketError => e
+        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+        exit 1
+      rescue Exception => e
+        check_response_code(e.response)
+      end
+
+      snippets = response.map do |s|
+        Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
       end
     end
 
@@ -47,27 +78,6 @@ class Gitlab
 
       data = JSON.parse(response)
       Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
-    end
-
-    ## Snippets
-    def self.snippets(project)
-      gitlab = Gitlab.new
-
-      id = numeric?(project) ? project : get_project_id(project)
-
-      begin 
-        response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets#{url_token}").to_s
-      rescue SocketError => e
-        STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
-        exit 1
-      rescue Exception => e
-        check_response_code(e.response)
-      end
-
-      data = JSON.parse(response)
-      snippets = data.map do |s|
-        Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
-      end
     end
 
     ## Snippet
