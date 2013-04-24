@@ -10,11 +10,6 @@ class MyCLI<Thor
   desc "projects [OPTIONS]", "list projects"
   long_desc <<-D
     Get a list of projects.  List will only include projects for which you have at least view privileges.\n
-
-    Use --nopager to override 'display_results_in_pager: true' configuration and turn ON paging one time for this 
-    command.\n
-    
-    Use --pager to override 'display_results_in_pager: false' configuration and turn ON paging one time for this command.\n
   D
   option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
   option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
@@ -47,11 +42,6 @@ class MyCLI<Thor
     Get a list of snippets for a particular project. \n
     
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.\n
-    
-    Use --nopager to override 'display_results_in_pager: true' configuration and turn ON paging one time for this 
-    command.\n
-
-    Use --pager to override 'display_results_in_pager: false' configuration and turn ON paging one time for this command.\n
   D
   option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
   option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
