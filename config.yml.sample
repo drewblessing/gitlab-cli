@@ -5,7 +5,10 @@
 # Found in My Profile -> Account -> Private token
 :private_token: super_secret_key_from_gitlab
 
-# For listing projects/snippets/etc, how many results would you like to see at once.
-# Note: You will be able to override this with a flag at runtime.  This will just be a
-# default. Value must be between 1 and 100. GitLab API imposes a 100 result limit.
-:results_per_page: 20
+# Whether or not to display lists of results in the
+# system pager (i.e. 'less').  
+# Warning: If you have a lot of projects/snippets
+# to list your results may go off-screen or become
+# unreadable. 
+# Recommended setting: true
+:display_lists_in_pager: true
