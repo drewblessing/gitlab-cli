@@ -7,11 +7,23 @@ require File.expand_path('../subcommands/snippet', __FILE__)
 require File.expand_path('../subcommands/project', __FILE__)
 
 class MyCLI<Thor
-  desc "projects", "list projects"
+  desc "projects [OPTIONS]", "list projects"
   long_desc <<-D
-    Get a list of projects.  List will only include projects for which you have at least view privileges.
+    Get a list of projects.  List will only include projects for which you have at least view privileges.\n
+
+    Use --nopager to override 'display_results_in_pager: true' configuration and turn ON paging one time for this 
+    command.\n
+    
+    Use --pager to override 'display_results_in_pager: false' configuration and turn ON paging one time for this command.\n
   D
+  option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
+  option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
   def projects
+    if options['pager'] && options['nopager']
+      STDERR.puts "Cannot specify --nopager and --pager options together. Choose one."
+      exit 1
+    end
+
     projects = Gitlab::Util.projects
     formatted_projects = ""
     pager = ENV['pager'] || 'less'
@@ -20,7 +32,7 @@ class MyCLI<Thor
       formatted_projects << "%s:\t%s\n" % [p.id, p.path_with_namespace]
     end
     
-    if Gitlab::Config[:display_results_in_pager]
+    if ((Gitlab::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
       unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
         STDERR.puts "Problem displaying projects in pager"
         exit 1
@@ -30,13 +42,25 @@ class MyCLI<Thor
     end
   end
 
-  desc "snippets [PROJECT]", "list snippets for a project"
+  desc "snippets [PROJECT] [OPTIONS]", "list snippets for a project"
   long_desc <<-D
     Get a list of snippets for a particular project. \n
     
-    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.
+    [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.\n
+    
+    Use --nopager to override 'display_results_in_pager: true' configuration and turn ON paging one time for this 
+    command.\n
+
+    Use --pager to override 'display_results_in_pager: false' configuration and turn ON paging one time for this command.\n
   D
+  option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
+  option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
   def snippets(project)
+    if options['pager'] && options['nopager']
+      STDERR.puts "Cannot specify --nopager and --pager options together. Choose one."
+      exit 1
+    end
+
     snippets = Gitlab::Util.snippets(project)
     formatted_snippets = ""
     pager = ENV['pager'] || 'less'
@@ -46,7 +70,7 @@ class MyCLI<Thor
     end
     puts "This project does not have any snippets.\n" if snippets.size == 0
 
-    if Gitlab::Config[:display_results_in_pager]
+    if ((Gitlab::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
       unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
         STDERR.puts "Problem displaying snippets in pager"
         exit 1

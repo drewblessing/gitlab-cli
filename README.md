@@ -35,7 +35,9 @@ Note2: Anywhere you see [PROJECT] you can either specify the full namespace/proj
 
 ### _List all projects_
 
-`gitlab projects`
+Usage: `gitlab projects [OPTIONS]`
+
+Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
 
 Example output:
 ```
@@ -46,9 +48,11 @@ Example output:
 13:	user1/project1
 ```
 
+Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
+
 ### _View detailed information about a project_
 
-`gitlab project info [PROJECT]`
+Usage: `gitlab project info [PROJECT]`
 
 Example output:
 ```
@@ -76,11 +80,15 @@ Using project ID: `gitlab snippets 13`
 
 Using project full namespace/project format: `gitlab snippets user1/project1`
 
+Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+
 Example output:
 ```
 2:  Title - Filename
 16:	README - README.md
 ```
+
+Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
 
 ### _View a snippet (Uses default pager or "less")_
 
