@@ -18,7 +18,7 @@ class Project < Thor
     printf "Name: %s\n", project.name
     printf "Path w/ Namespace: %s\n", project.path_with_namespace
     printf "Project URL: %s\n", project.project_url
-    printf "Description: %s\n", project.description.empty? ? "N/A" : project.description
+    printf "Description: %s\n", project.description.nil? || project.description.empty? ? "N/A" : project.description
     printf "Default Branch: %s\n", project.default_branch.nil? ? "N/A" : project.default_branch
     printf "Owner: %s <%s>\n", project.owner.name, project.owner.email
     printf "Public?: %s\n", project.public.to_s
