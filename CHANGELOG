@@ -1,3 +1,7 @@
+2013-04-24 Drew Blessing
+  * Issue 16: display_results_in_pager still defaults `true` in config class
+  * Version 1.1.1: Tag version 1.1.1
+
 2013-04-23 Drew Blessing
   * Pull Request 14: Fix bug with project description. PR submitted by Jiwoong.
   * Issue 9: Add `project info` command to README

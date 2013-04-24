@@ -2,7 +2,7 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
-## Changes in v1.1.0
+## Changes in v1.1.x
 
 * Minor bug fixes
 * Option to display results in system pager or `less`.  See notes under `gitlab projects [OPTIONS]` and `gitlab snippets [PROJECT] [OPTIONS]` commands for more information.
