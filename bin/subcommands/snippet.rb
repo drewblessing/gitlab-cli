@@ -10,7 +10,7 @@ class Snippet < Thor
   end
   
   # ADD
-  desc "add [PROJECT] [FILE]", "add a snippet"
+  desc "add [PROJECT] [FILE] [OPTIONS]", "add a snippet"
   long_desc <<-D
     Add a snippet to a project.  You may specify a file to create a snippet from or you may pipe content from cat.
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.

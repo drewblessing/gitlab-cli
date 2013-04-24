@@ -48,8 +48,8 @@ Example output:
 13:	user1/project1
 ```
 
-Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
-Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+Note: As of v1.1.0, this command can output in the system pager or `less` to improve readability when many results are shown. Set configuration `display_results_in_pager` command to `true` to enable this functionality.
+Use --nopager or --pager to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
 
 ### _View detailed information about a project_
 
@@ -89,8 +89,8 @@ Example output:
 16:	README - README.md
 ```
 
-Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
-Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+Note: As of v1.1.0, this command can output in the system pager or `less` to improve readability when many results are shown. Set configuration `display_results_in_pager` command to `true` to enable this functionality.
+Use --nopager or --pager to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
 
 ### _View a snippet (Uses default pager or "less")_
 

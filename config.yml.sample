@@ -7,7 +7,6 @@
 
 # Whether or not to display potentially lengthy
 # results in the system pager (i.e. 'less').  
-# Warning: If you set this to false, information
-# may go off-screen and become unreadable. 
+# Default: false (to maintain original behavior)
 # Recommended setting: true
-:display_results_in_pager: true
+:display_results_in_pager: false
