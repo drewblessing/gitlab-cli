@@ -5,7 +5,7 @@ _Many people prefer to work from the CLI when possible. This tool aims to bring 
 ## Changes in v1.1.0
 
 * Minor bug fixes
-* Option to display results in system pager or `less`.  See notes under `gitlab projects [OPTIONS]` and `gitlab snippets [PROJECT]` commands for more information.
+* Option to display results in system pager or `less`.  See notes under `gitlab projects [OPTIONS]` and `gitlab snippets [PROJECT] [OPTIONS]` commands for more information.
 
 ## GitLab Versions
 
@@ -80,7 +80,7 @@ Created at: Mon Apr 01 18:42:38 UTC 2013
 
 ### _List all snippets for a project_
 
-Usage: `gitlab snippets [PROJECT]`
+Usage: `gitlab snippets [PROJECT] [OPTIONS]`
 
 Using project ID: `gitlab snippets 13`
 
