@@ -7,7 +7,15 @@ class Gitlab
     def self.projects
       gitlab = Gitlab.new
       begin 
-        response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects#{url_token}").to_s
+        response = Array.new
+        page = 1
+        while true do
+          url = "api/v3/projects%s&page=%s&per_page=100" % [url_token, page]
+          page_data = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+          break if page_data.length == 2
+          response.concat JSON.parse(page_data)
+          page += 1
+        end 
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -15,8 +23,7 @@ class Gitlab
         check_response_code(e.response)
       end
 
-      data = JSON.parse(response)
-      projects = data.map do |p|
+      projects = response.map do |p|
         Project.new(p['id'],p['name'],p['description'],p['default_branch'],p['public'],p['path'],p['path_with_namespace'],p['issues_enabled'],p['merge_requests_enabled'],p['wall_enabled'],p['wiki_enabled'],p['created_at'],p['owner'])
       end
     end

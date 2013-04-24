@@ -13,8 +13,20 @@ class MyCLI<Thor
   D
   def projects
     projects = Gitlab::Util.projects
+    formatted_projects = ""
+    pager = ENV['pager'] || 'less'
+
     projects.each do |p|
-      printf "%s:\t%s\n", p.id, p.path_with_namespace
+      formatted_projects << "%s:\t%s\n" % [p.id, p.path_with_namespace]
+    end
+    
+    if Gitlab::Config[:display_lists_in_pager]
+      unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
+        STDERR.puts "Problem displaying projects in pager"
+        exit 1
+      end
+    else 
+      puts formatted_projects
     end
   end
 
