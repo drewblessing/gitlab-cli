@@ -20,7 +20,7 @@ class MyCLI<Thor
       formatted_projects << "%s:\t%s\n" % [p.id, p.path_with_namespace]
     end
     
-    if Gitlab::Config[:display_lists_in_pager]
+    if Gitlab::Config[:display_results_in_pager]
       unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
         STDERR.puts "Problem displaying projects in pager"
         exit 1
@@ -46,7 +46,7 @@ class MyCLI<Thor
     end
     puts "This project does not have any snippets.\n" if snippets.size == 0
 
-    if Gitlab::Config[:display_lists_in_pager]
+    if Gitlab::Config[:display_results_in_pager]
       unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
         STDERR.puts "Problem displaying snippets in pager"
         exit 1

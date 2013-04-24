@@ -5,10 +5,9 @@
 # Found in My Profile -> Account -> Private token
 :private_token: super_secret_key_from_gitlab
 
-# Whether or not to display lists of results in the
-# system pager (i.e. 'less').  
-# Warning: If you have a lot of projects/snippets
-# to list your results may go off-screen or become
-# unreadable. 
+# Whether or not to display potentially lengthy
+# results in the system pager (i.e. 'less').  
+# Warning: If you set this to false, information
+# may go off-screen and become unreadable. 
 # Recommended setting: true
-:display_lists_in_pager: true
+:display_results_in_pager: true

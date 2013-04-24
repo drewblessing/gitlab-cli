@@ -2,7 +2,7 @@ class Gitlab
   class Config
     class << self
       def load(source)
-        @config = {:gitlab_url => nil,:private_token => nil,:display_lists_in_pager => true}
+        @config = {:gitlab_url => nil,:private_token => nil,:display_results_in_pager => true}
 
         if source.is_a?(String)
           raise "Config file #{source} not found" unless File.exist?(source)
