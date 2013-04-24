@@ -37,7 +37,7 @@ Note2: Anywhere you see [PROJECT] you can either specify the full namespace/proj
 
 Usage: `gitlab projects [OPTIONS]`
 
-Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
 
 Example output:
 ```
@@ -49,6 +49,7 @@ Example output:
 ```
 
 Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
+Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
 
 ### _View detailed information about a project_
 
@@ -80,7 +81,7 @@ Using project ID: `gitlab snippets 13`
 
 Using project full namespace/project format: `gitlab snippets user1/project1`
 
-Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
 
 Example output:
 ```
@@ -89,6 +90,7 @@ Example output:
 ```
 
 Note: As of v1.1.0, this command displays output in the system pager or `less` by default. Set configuration `display_results_in_pager` command to `false` to revert this change.
+Use --nopager or --pager to temporarily turn paging off or on respectively.  This effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
 
 ### _View a snippet (Uses default pager or "less")_
 
