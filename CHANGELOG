@@ -4,8 +4,7 @@
   * Issue 10: Test against 5.1
   * Issue 11: `projects` command only shows 20 projects, no options to paginate. Issue submitted by weisjohn.
   * Issue 15: Don't need to `inspect` snippet content.
-
-NOTE: Issue 11 brought about a change in the way projects and snippets are listed. `gitlab projects` and `gitlab snippets [PROJECT]` command results are now displayed in the system pager or `less` by default.  A new configuration called `display_results_in_pager` has been created for this purpose.  If you do not wish to have these command results output to the system pager, simply set the conifguration to `false`.
+  * Version 1.1.0: Tag version 1.1.0 (No default behavior was altered. New features implemented)
 
 2013-04-22 Drew Blessing
   * Issue 10: Test against Gitlab 5.1
