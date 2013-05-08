@@ -1,6 +1,4 @@
-require 'rest_client'
-
-class Gitlab
+module GitlabCli
   class User
     attr_accessor :id, :username, :email, :name, :blocked, :created_at, :bio, :skype, :linkedin, :twitter, :extern_uid, :provider
 

@@ -1,6 +1,4 @@
-require File.expand_path('../user', __FILE__)
-
-class Gitlab
+module GitlabCli
   class Project
     attr_accessor :id, :name, :description, :default_branch, :public, :path, :path_with_namespace, :issues_enabled, :merge_requests_enabled, :wall_enabled, :wiki_enabled, :created_at, :project_url, :owner
 
@@ -24,12 +22,12 @@ class Gitlab
 
     private
     def get_project_url
-      URI.join(Config[:gitlab_url],@path_with_namespace)
+      URI.join(GitlabCli::Config[:gitlab_url],@path_with_namespace)
     end    
 
     private
     def parse_owner(owner)
-      Gitlab::User.new(owner['id'],owner['username'],owner['email'],owner['name'],owner['blocked'],owner['created_at'])
+      GitlabCli::User.new(owner['id'],owner['username'],owner['email'],owner['name'],owner['blocked'],owner['created_at'])
     end
     
   end

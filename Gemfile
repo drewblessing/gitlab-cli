@@ -1,4 +1,4 @@
-source "https://rubygems.org"
-gem 'json'
-gem 'thor'
-gem 'rest-client'
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in gitlab_cli.gemspec
+gemspec

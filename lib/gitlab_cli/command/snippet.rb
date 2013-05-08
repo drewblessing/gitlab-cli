@@ -1,8 +1,6 @@
-#!/usr/bin/ruby
-
-require 'shellwords'
-
-class Snippet < Thor
+module GitlabCli
+  module Command
+    class Snippet < Thor
   map "save" => "download"
 
   def self.banner(task, namespace = true, subcommand = true)
@@ -22,7 +20,7 @@ class Snippet < Thor
   option :title, :desc => "The title to use for the new snippet", :required => true, :type => :string, :aliases => ["-t"]
   option :file_name, :desc => "A file name for this snippet", :required => true, :type => :string, :aliases => ["-n", "-f"]  
   def add(project, file=nil)
-    snippet = Gitlab::Util.snippet_create(project, options['title'], options['file_name'], file)
+    snippet = GitlabCli::Util.snippet_create(project, options['title'], options['file_name'], file)
 
     printf "Snippet created.\nID: %s\nURL: %s\n", snippet.id, snippet.view_url
   end 
@@ -39,7 +37,7 @@ class Snippet < Thor
     $ gitlab snippet view 10 6
   D
   def view(project, snippet)
-    snippet = Gitlab::Util.snippet_view(project, snippet)    
+    snippet = GitlabCli::Util.snippet_view(project, snippet)    
 
     pager = ENV['pager'] || 'less'
 
@@ -61,8 +59,8 @@ class Snippet < Thor
     $ gitlab snippet edit 10 6
   D
   def edit(project, snippet)
-    snippet_obj = Gitlab::Util.snippet_get(project, snippet)
-    snippet_code = Gitlab::Util.snippet_view(project, snippet)
+    snippet_obj = GitlabCli::Util.snippet_get(project, snippet)
+    snippet_code = GitlabCli::Util.snippet_view(project, snippet)
 
     editor = ENV['editor'] || 'vi'
 
@@ -73,7 +71,7 @@ class Snippet < Thor
 
     snippet_code = File.read(temp_file_path)
 
-    snippet = Gitlab::Util.snippet_update(project, snippet_obj, snippet_code)
+    snippet = GitlabCli::Util.snippet_update(project, snippet_obj, snippet_code)
     printf "Snippet updated.\n URL: %s\n", snippet.view_url
   end
 
@@ -91,7 +89,7 @@ class Snippet < Thor
     response = ask "Are you sure you want to delete this snippet? (Yes\\No)"
     exit unless response.downcase == 'yes'
 
-    snippet = Gitlab::Util.snippet_delete(project, snippet)
+    snippet = GitlabCli::Util.snippet_delete(project, snippet)
 
     printf "Successfully deleted the snippet.\n"
   end
@@ -103,7 +101,7 @@ class Snippet < Thor
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def info(project, snippet)
-    snippet = Gitlab::Util.snippet_get(project, snippet)
+    snippet = GitlabCli::Util.snippet_get(project, snippet)
 
     printf "Snippet ID: %s\n", snippet.id
     printf "Title: %s\n", snippet.title
@@ -121,9 +119,10 @@ class Snippet < Thor
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def download(project, snippet, file_path)
-    snippet = Gitlab::Util.snippet_download(project, snippet, file_path)
+    snippet = GitlabCli::Util.snippet_download(project, snippet, file_path)
 
     puts "Snippet file saved successfully.\n"
   end
 end
-
+end
+end

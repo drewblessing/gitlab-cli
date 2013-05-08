@@ -1,4 +1,4 @@
-class Gitlab
+module GitlabCli
   class Config
     class << self
       def load(source)
@@ -6,7 +6,7 @@ class Gitlab
 
         if source.is_a?(String)
           raise "Config file #{source} not found" unless File.exist?(source)
-
+  
           config = YAML.load_file(source)
           @config.merge! config if config
 
@@ -29,4 +29,3 @@ class Gitlab
     end
   end
 end
-

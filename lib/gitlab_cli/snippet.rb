@@ -1,6 +1,4 @@
-require File.expand_path('../user', __FILE__)
-
-class Gitlab
+module GitlabCli
   class Snippet
     attr_accessor :id, :title, :file_name, :expires_at, :updated_at, :created_at, :project_id, :view_url, :author
 
@@ -20,13 +18,13 @@ class Gitlab
 
     private
     def get_view_url
-      project_path_with_namespace = Gitlab::Util.get_project_path_with_namespace(@project_id)
-      URI.join(Config[:gitlab_url],"%s/snippets/%s" % [project_path_with_namespace,@id.to_s])
+      project_path_with_namespace = GitlabCli::Util.get_project_path_with_namespace(@project_id)
+      URI.join(GitlabCli::Config[:gitlab_url],"%s/snippets/%s" % [project_path_with_namespace,@id.to_s])
     end
 
     private
     def parse_author(author)
-      Gitlab::User.new(author['id'],author['username'],author['email'],author['name'],author['blocked'],author['created_at'])
+      GitlabCli::User.new(author['id'],author['username'],author['email'],author['name'],author['blocked'],author['created_at'])
     end
   end
 end

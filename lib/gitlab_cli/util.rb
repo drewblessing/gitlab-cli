@@ -1,18 +1,17 @@
 require 'json'
+require 'rest-client'
 
-class Gitlab
+module GitlabCli
   class Util
 
     ## Projects
     def self.projects
-      gitlab = Gitlab.new
-
       begin 
         response = Array.new
         page = 1
         while true do
           url = "api/v3/projects%s&page=%s&per_page=100" % [url_token, page]
-          page_data = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+          page_data = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
           # Length of 2 indicates empty Array (represented as a string)
           break if page_data.length == 2
           response.concat JSON.parse(page_data)
@@ -26,14 +25,12 @@ class Gitlab
       end
 
       projects = response.map do |p|
-        Project.new(p['id'],p['name'],p['description'],p['default_branch'],p['public'],p['path'],p['path_with_namespace'],p['issues_enabled'],p['merge_requests_enabled'],p['wall_enabled'],p['wiki_enabled'],p['created_at'],p['owner'])
+        GitlabCli::Project.new(p['id'],p['name'],p['description'],p['default_branch'],p['public'],p['path'],p['path_with_namespace'],p['issues_enabled'],p['merge_requests_enabled'],p['wall_enabled'],p['wiki_enabled'],p['created_at'],p['owner'])
       end
     end
     
     ## Snippets
     def self.snippets(project)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
 
       begin 
@@ -41,7 +38,7 @@ class Gitlab
         page = 1
         while true do
           url = "api/v3/projects/%s/snippets%s&page=%s&per_page=100" % [id, url_token, page]
-          page_data = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+          page_data = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
           # Length of 2 indicates empty Array (represented as a string)
           break if page_data.length == 2         
           response.concat JSON.parse(page_data)
@@ -55,20 +52,18 @@ class Gitlab
       end
 
       snippets = response.map do |s|
-        Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
+        GitlabCli::Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
       end
     end
 
     ## Project
     # Project - Get project object
     def self.project_get(project)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
       url = "api/v3/projects/%s%s" % [id,url_token]
 
       begin
-        response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+        response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -77,18 +72,16 @@ class Gitlab
       end
 
       data = JSON.parse(response)
-      Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
+      GitlabCli::Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
     end
 
     ## Snippet
     # Snippet - Get snippet object
     def self.snippet_get(project, snippet)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
 
       begin 
-        response = RestClient.get URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
+        response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -96,13 +89,11 @@ class Gitlab
         check_response_code(e.response)
       end
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+      GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - Create
     def self.snippet_create(project, title, file_name, code)
-      gitlab = Gitlab.new
-
       ## Adapted from https://github.com/ripienaar/snipper/blob/master/lib/snipper/util.rb
       if STDIN.tty?
         if File.readable?(code)
@@ -122,7 +113,7 @@ class Gitlab
       payload = {:title => title, :file_name => file_name, :code => content}
 
       begin 
-        response = RestClient.post URI.join(Config[:gitlab_url],url).to_s, payload
+        response = RestClient.post URI.join(GitlabCli::Config[:gitlab_url],url).to_s, payload
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -130,19 +121,17 @@ class Gitlab
         check_response_code(e.response)
       end
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+      GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - View
     def self.snippet_view(project, snippet)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
 
       url = "api/v3/projects/%s/snippets/%s/raw%s" % [id, snippet, url_token]
 
       begin 
-        response = RestClient.get URI.join(Config[:gitlab_url],url).to_s
+        response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -153,15 +142,13 @@ class Gitlab
     
     # Snippet - Update 
     def self.snippet_update(project, snippet, content)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
 
       url = "api/v3/projects/%s/snippets/%s%s" % [id, snippet.id, url_token]
       payload = {:title => snippet.title, :file_name => snippet.file_name, :code => content}
 
       begin 
-        response = RestClient.put URI.join(Config[:gitlab_url],url).to_s, payload
+        response = RestClient.put URI.join(GitlabCli::Config[:gitlab_url],url).to_s, payload
       rescue SocketError => e
         STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
         exit 1
@@ -170,20 +157,18 @@ class Gitlab
       end
 
       data = JSON.parse(response)
-      Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+      GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
     end
 
     # Snippet - Delete
     def self.snippet_delete(project, snippet)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
 
       snippet_get = snippet_get(project, snippet)
       
       if snippet_get
         begin 
-          response = RestClient.delete URI.join(Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
+          response = RestClient.delete URI.join(GitlabCli::Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{url_token}").to_s
         rescue SocketError => e
           STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
@@ -195,8 +180,6 @@ class Gitlab
 
     # /snippet - Download/Save
     def self.snippet_download(project, snippet, file_path)
-      gitlab = Gitlab.new
-
       id = numeric?(project) ? project : get_project_id(project)
       snippet_content = snippet_view(project, snippet)
       
@@ -239,7 +222,7 @@ class Gitlab
     # Construct private token for URL
     private
     def self.url_token
-      "?private_token=#{Config[:private_token]}"
+      "?private_token=#{GitlabCli::Config[:private_token]}"
     end
 
     private
