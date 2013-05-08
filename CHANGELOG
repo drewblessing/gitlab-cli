@@ -1,0 +1,29 @@
+2013-05-08 Drew Blessing
+  * Issue 13: Refactor to support a gitlab cli gem
+
+2013-04-24 Drew Blessing
+  * Issue 16: display_results_in_pager still defaults `true` in config class
+  * Version 1.1.1: Tag version 1.1.1
+
+2013-04-23 Drew Blessing
+  * Pull Request 14: Fix bug with project description. PR submitted by Jiwoong.
+  * Issue 9: Add `project info` command to README
+  * Issue 10: Test against 5.1
+  * Issue 11: `projects` command only shows 20 projects, no options to paginate. Issue submitted by weisjohn.
+  * Issue 15: Don't need to `inspect` snippet content.
+  * Version 1.1.0: Tag version 1.1.0 (No default behavior was altered. New features implemented)
+
+2013-04-22 Drew Blessing
+  * Issue 10: Test against Gitlab 5.1
+  * Version 1.0.0: Tag version 1.0.0
+
+2013-04-21  Drew Blessing
+  * Issue 3: Add option to save a snippet file locally
+  * Issue 4: Fix subcommand usage print out
+  * Issue 5: Improve examples in README
+  * Issue 6: Move project setup to top of README
+  * Issue 7: Improve error handling for times when Gitlab is not accessible
+  * Issue 8: Fix regression introduced in commit 4b5397dfce9af738156e8343dbca4bba56fc84d1
+
+2013-04-19  Drew Blessing 
+  * Initial release
