@@ -21,9 +21,11 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 _How do I get started?_ 
 
 Install from rubygems
+
 1. _`gem install gitlab_cli`_
 
 Install from the repo.
+
 1. _Clone the repo._
 2. _`rake build`_
 3. _`rake install` (Requires root privileges)._
