@@ -20,14 +20,6 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 
 ## Project Setup
 
-_Required Gems_
-
-If you install from rubygems below then you will not need to install these required gems yourself. The gem package manager will attempt to install the proper versions for you.
-
-1. thor >= 0.17.0 and < 0.19
-2. json >= 1.7.7 and < 1.8
-3. rest-client >= 1.6.7 and < 1.7
-
 _How do I get started?_ 
 
 Install from rubygems (Recommended)
@@ -41,6 +33,14 @@ Install from the repo (requires rake and bundler).
 3. _`rake install` (Requires root privileges)._
 
 You now have access to the `gitlab` command.
+
+_Required Gems_
+
+If you install from rubygems below then you will not need to install these required gems yourself. The gem package manager will attempt to install the proper versions for you.
+
+1. thor >= 0.17.0 and < 0.19
+2. json >= 1.7.7 and < 1.8
+3. rest-client >= 1.6.7 and < 1.7
 
 _How can I find the private token for my user?_
 
