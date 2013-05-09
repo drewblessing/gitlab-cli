@@ -18,13 +18,19 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 
 ## Project Setup
 
+_Required Gems_
+
+1. thor >= 0.17.0 and < 0.19
+2. json >= 1.7.7 and < 1.8
+3. rest-client >= 1.6.7 and < 1.7
+
 _How do I get started?_ 
 
-Install from rubygems
+Install from rubygems (Recommended)
 
 1. _`gem install gitlab_cli`_
 
-Install from the repo.
+Install from the repo (requires rake and bundler).
 
 1. _Clone the repo._
 2. _`rake build`_
