@@ -2,9 +2,9 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
-## Version 2.0.0
+## Version 2.0.0 Pre-Release
 
-NOTE: This version is NOT been released yet.  As such, it has not been uploaded to RubyGems and will not be available via `gem install gitlab_cli` yet.  Please checkout tag v1.1.1 and follow instructions in that README.md until this is marked as released and stable.
+NOTE: This version has NOT been released yet.  As such, it has not been uploaded to RubyGems and will not be available via `gem install gitlab_cli` yet.  Please checkout tag v1.1.1 and follow instructions in that README.md until this is marked as released and stable.
 
 This version contains breaking changes!!
 
