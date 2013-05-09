@@ -4,6 +4,8 @@ _Many people prefer to work from the CLI when possible. This tool aims to bring 
 
 ## Version 2.0.0
 
+NOTE: This version is NOT been released yet.  As such, it has not been uploaded to RubyGems and will not be available via `gem install gitlab_cli` yet.  Please checkout tag v1.1.1 and follow instructions in that README.md until this is marked as released and stable.
+
 This version contains breaking changes!!
 
 * Now packaged as a gem! 
