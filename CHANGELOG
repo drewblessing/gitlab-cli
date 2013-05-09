@@ -1,5 +1,9 @@
 2013-05-08 Drew Blessing
   * Issue 13: Refactor to support a gitlab cli gem
+  * Issue 17: Create a config file in $HOME folder instead of using config.yml
+  * Issue 18: Refactor util class
+  * Issue 20: Add dependencies to gemspec
+  * Issue 21: Test across multiple OS's
 
 2013-04-24 Drew Blessing
   * Issue 16: display_results_in_pager still defaults `true` in config class
