@@ -2,7 +2,7 @@ module GitlabCli
   module Util
     class Snippet
       # Snippet - Get snippet object
-      def self.snippet_get(project, snippet)
+      def self.get(project, snippet)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
 
         begin 
@@ -18,7 +18,7 @@ module GitlabCli
       end
 
       # Snippet - Create
-      def self.snippet_create(project, title, file_name, code)
+      def self.create(project, title, file_name, code)
         ## Adapted from https://github.com/ripienaar/snipper/blob/master/lib/snipper/util.rb
         if STDIN.tty?
           if File.readable?(code)
@@ -50,7 +50,7 @@ module GitlabCli
       end
 
       # Snippet - View
-      def self.snippet_view(project, snippet)
+      def self.view(project, snippet)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
 
         url = "api/v3/projects/%s/snippets/%s/raw%s" % [id, snippet, GitlabCli::Util.url_token]
@@ -66,7 +66,7 @@ module GitlabCli
       end
       
       # Snippet - Update 
-      def self.snippet_update(project, snippet, content)
+      def self.update(project, snippet, content)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
 
         url = "api/v3/projects/%s/snippets/%s%s" % [id, snippet.id, GitlabCli::Util.url_token]
@@ -86,10 +86,10 @@ module GitlabCli
       end
 
       # Snippet - Delete
-      def self.snippet_delete(project, snippet)
+      def self.delete(project, snippet)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
 
-        snippet_get = snippet_get(project, snippet)
+        snippet_get = get(project, snippet)
         
         if snippet_get
           begin 
@@ -104,9 +104,9 @@ module GitlabCli
       end
 
       # /snippet - Download/Save
-      def self.snippet_download(project, snippet, file_path)
+      def self.download(project, snippet, file_path)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
-        snippet_content = snippet_view(project, snippet)
+        snippet_content = view(project, snippet)
         
         begin
           File.open(file_path, 'w') { |file| file.write(snippet_content) }
@@ -116,15 +116,6 @@ module GitlabCli
         rescue Errno::ENOENT => e
           STDERR.puts "Specified directory does not exist.  Directory must exist to save the snippet file."
           exit 1
-        end
-      end
-
-      # Get a project's path with namespace
-      def self.get_project_path_with_namespace(project_id)
-        projects = self.projects
-        projects.each do |p|
-          # Return id of matching project. Return statement must be used for proper return here.
-          return p.path_with_namespace if p.id.to_i == project_id.to_i
         end
       end
     end

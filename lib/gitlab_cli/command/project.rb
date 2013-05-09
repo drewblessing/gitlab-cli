@@ -12,7 +12,7 @@ module GitlabCli
         [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id.
       D
       def info(project)
-        project = GitlabCli::Util.project_get(project)
+        project = GitlabCli::Util::Project.get(project)
 
         printf "Project ID: %s\n", project.id
         printf "Name: %s\n", project.name

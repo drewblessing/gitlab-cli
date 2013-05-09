@@ -18,7 +18,7 @@ module GitlabCli
 
     private
     def get_view_url
-      project_path_with_namespace = GitlabCli::Util.get_project_path_with_namespace(@project_id)
+      project_path_with_namespace = GitlabCli::Util::Project.get_project_path_with_namespace(@project_id)
       URI.join(GitlabCli::Config[:gitlab_url],"%s/snippets/%s" % [project_path_with_namespace,@id.to_s])
     end
 

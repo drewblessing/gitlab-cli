@@ -1,12 +1,12 @@
-require 'json'
-require 'rest-client'
-
 module GitlabCli
   module Util
     autoload :Projects,      'gitlab_cli/util/projects'
     autoload :Snippets,      'gitlab_cli/util/snippets'
     autoload :Project,       'gitlab_cli/util/project'
     autoload :Snippet,       'gitlab_cli/util/snippet'
+
+    autoload :RestClient,    'rest-client'
+    autoload :JSON,          'json'
 
     ## Internal methods
     # Get project id

@@ -20,7 +20,7 @@ module GitlabCli
   option :title, :desc => "The title to use for the new snippet", :required => true, :type => :string, :aliases => ["-t"]
   option :file_name, :desc => "A file name for this snippet", :required => true, :type => :string, :aliases => ["-n", "-f"]  
   def add(project, file=nil)
-    snippet = GitlabCli::Util.snippet_create(project, options['title'], options['file_name'], file)
+    snippet = GitlabCli::Util::Snippet.create(project, options['title'], options['file_name'], file)
 
     printf "Snippet created.\nID: %s\nURL: %s\n", snippet.id, snippet.view_url
   end 
@@ -37,7 +37,7 @@ module GitlabCli
     $ gitlab snippet view 10 6
   D
   def view(project, snippet)
-    snippet = GitlabCli::Util.snippet_view(project, snippet)    
+    snippet = GitlabCli::Util::Snippet.view(project, snippet)    
 
     pager = ENV['pager'] || 'less'
 
@@ -59,8 +59,8 @@ module GitlabCli
     $ gitlab snippet edit 10 6
   D
   def edit(project, snippet)
-    snippet_obj = GitlabCli::Util.snippet_get(project, snippet)
-    snippet_code = GitlabCli::Util.snippet_view(project, snippet)
+    snippet_obj = GitlabCli::Util::Snippet.get(project, snippet)
+    snippet_code = GitlabCli::Util::Snippet.view(project, snippet)
 
     editor = ENV['editor'] || 'vi'
 
@@ -71,7 +71,7 @@ module GitlabCli
 
     snippet_code = File.read(temp_file_path)
 
-    snippet = GitlabCli::Util.snippet_update(project, snippet_obj, snippet_code)
+    snippet = GitlabCli::Util::Snippet.update(project, snippet_obj, snippet_code)
     printf "Snippet updated.\n URL: %s\n", snippet.view_url
   end
 
@@ -89,7 +89,7 @@ module GitlabCli
     response = ask "Are you sure you want to delete this snippet? (Yes\\No)"
     exit unless response.downcase == 'yes'
 
-    snippet = GitlabCli::Util.snippet_delete(project, snippet)
+    snippet = GitlabCli::Util::Snippet.delete(project, snippet)
 
     printf "Successfully deleted the snippet.\n"
   end
@@ -101,7 +101,7 @@ module GitlabCli
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def info(project, snippet)
-    snippet = GitlabCli::Util.snippet_get(project, snippet)
+    snippet = GitlabCli::Util::Snippet.get(project, snippet)
 
     printf "Snippet ID: %s\n", snippet.id
     printf "Title: %s\n", snippet.title
@@ -119,7 +119,7 @@ module GitlabCli
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def download(project, snippet, file_path)
-    snippet = GitlabCli::Util.snippet_download(project, snippet, file_path)
+    snippet = GitlabCli::Util::Snippet.download(project, snippet, file_path)
 
     puts "Snippet file saved successfully.\n"
   end
