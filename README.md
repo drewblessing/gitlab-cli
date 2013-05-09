@@ -22,6 +22,8 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 
 _Required Gems_
 
+If you install from rubygems below then you will not need to install these required gems yourself. The gem package manager will attempt to install the proper versions for you.
+
 1. thor >= 0.17.0 and < 0.19
 2. json >= 1.7.7 and < 1.8
 3. rest-client >= 1.6.7 and < 1.7
