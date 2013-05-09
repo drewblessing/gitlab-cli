@@ -1,3 +1,6 @@
+2013-05-09 Drew Blessing
+  * Pull Request 23: Add an user friendly message for 'config missing'. PR submitted by genewoo.
+
 2013-05-08 Drew Blessing
   * Issue 13: Refactor to support a gitlab cli gem
   * Issue 17: Create a config file in $HOME folder instead of using config.yml
