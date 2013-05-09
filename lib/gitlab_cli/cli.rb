@@ -15,7 +15,7 @@ module GitlabCli
         exit 1
       end
 
-      projects = GitlabCli::Util.projects
+      projects = GitlabCli::Util::Projects.get_all
       formatted_projects = ""
       pager = ENV['pager'] || 'less'
 
@@ -47,7 +47,7 @@ module GitlabCli
         exit 1
       end
 
-      snippets = GitlabCli::Util.snippets(project)
+      snippets = GitlabCli::Util::Snippets.get_all(project)
       formatted_snippets = ""
       pager = ENV['pager'] || 'less'
 
