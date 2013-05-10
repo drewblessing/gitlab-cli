@@ -80,11 +80,13 @@ module GitlabCli
       # Use some light meta-programming to create the various methods to
       # output text to the UI. These all delegate the real functionality
       # to `say`.
+      #@shell.say(message,color.nil? ? COLOR_MAP[:#{method}] : color)
       [:info, :warn, :error, :success].each do |method|
         class_eval <<-CODE
-          def #{method}(message)
+          def #{method}(message,color=nil,force_new_line = (message.to_s !~ /( |\t)\Z/))
+            say_color = color.nil? ? COLOR_MAP[:#{method}] : color
             #super(message)
-            @shell.say(message,COLOR_MAP[:#{method}])
+            @shell.say(message,say_color,force_new_line)
           end
         CODE
       end

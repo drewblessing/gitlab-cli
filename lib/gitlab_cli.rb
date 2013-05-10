@@ -14,18 +14,18 @@ module GitlabCli
   autoload :Util,             'gitlab_cli/util'
   autoload :Version,          'gitlab_cli/version'
 
-  GitlabCli.ui = GitlabCli::UI::Color.new
+  GitlabCli.ui = STDOUT.tty? ? GitlabCli::UI::Color.new : GitlabCli::UI::Basic.new
 
   CONFIG_PATH = '~/.gitlab.yml'
   config = File.expand_path(CONFIG_PATH)
   unless File.exist?(config)
     File.open(File.expand_path(File.dirname(__FILE__) + "/../config.yml.sample", "r") )do |sample|
-      puts "Create a '#{CONFIG_PATH}' as following sample config"
-      puts "=" * 40
+      GitlabCli.ui.error "Could not find a config file. Create a config file, '#{CONFIG_PATH}', from the following sample config"
+      GitlabCli.ui.error "=" * 15 + " BEGIN (Do not copy this line) " + "=" * 15, :cyan
       while (line = sample.gets)
-        puts line
+        GitlabCli.ui.error line, :white, false
       end
-      puts "=" * 40
+      GitlabCli.ui.error "=" * 15 + " END (Do not copy this line) " + "=" * 15, :cyan
     end
     exit(-1)
   end
