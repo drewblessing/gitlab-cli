@@ -1,5 +1,6 @@
 2013-05-09 Drew Blessing
   * Pull Request 23: Add an user friendly message for 'config missing'. PR submitted by genewoo.
+  * Issue 24: Throw error when passing a invlid project id. Issue submitted by genewoo.
 
 2013-05-08 Drew Blessing
   * Issue 13: Refactor to support a gitlab cli gem

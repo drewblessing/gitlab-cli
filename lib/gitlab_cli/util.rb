@@ -11,7 +11,7 @@ module GitlabCli
     ## Internal methods
     # Get project id
     def self.get_project_id(project)
-      projects = self.projects
+      projects = GitlabCli::Util::Projects.get_all
       project = projects.detect do |p|
         p.path_with_namespace == project
       end
