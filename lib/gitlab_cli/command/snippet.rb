@@ -22,7 +22,9 @@ module GitlabCli
   def add(project, file=nil)
     snippet = GitlabCli::Util::Snippet.create(project, options['title'], options['file_name'], file)
 
-    printf "Snippet created.\nID: %s\nURL: %s\n", snippet.id, snippet.view_url
+    GitlabCli.ui.success "Snippet created."
+    GitlabCli.ui.info "ID: %s" % [snippet.id]
+    GitlabCli.ui.info "URL: %s" % [snippet.view_url]
   end 
 
   ## VIEW
