@@ -1,8 +1,20 @@
 require 'thor'
 require 'gitlab_cli'
+require 'gitlab_cli/version'
 
 module GitlabCli
   class CLI < Thor
+    map "-v" => "version" 
+    map "--version" => "version"
+
+    desc "--version", "print version"
+    long_desc <<-D
+      Print the Gitlab CLI tool version
+    D
+    def version
+      GitlabCli.ui.info "Gitlab CLI version %s" % [GitlabCli::VERSION]
+    end
+
     desc "projects [OPTIONS]", "list projects"
     long_desc <<-D
       Get a list of projects.  List will only include projects for which you have at least view privileges.\n
