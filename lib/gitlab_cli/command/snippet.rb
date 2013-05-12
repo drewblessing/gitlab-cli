@@ -44,7 +44,7 @@ module GitlabCli
     pager = ENV['pager'] || 'less'
 
     unless system("echo %s | %s" % [Shellwords.escape(snippet), pager])
-      STDERR.puts "Problem displaying snippet"
+      GitlabCli.ui.error "Problem displaying snippet"
       exit 1
     end
   end
@@ -74,7 +74,8 @@ module GitlabCli
     snippet_code = File.read(temp_file_path)
 
     snippet = GitlabCli::Util::Snippet.update(project, snippet_obj, snippet_code)
-    printf "Snippet updated.\n URL: %s\n", snippet.view_url
+    GitlabCli.ui.success "Snippet updated."
+    GitlabCli.ui.info "URL: %s" % [snippet.view_url]
   end
 
   ## DELETE
@@ -93,7 +94,7 @@ module GitlabCli
 
     snippet = GitlabCli::Util::Snippet.delete(project, snippet)
 
-    printf "Successfully deleted the snippet.\n"
+    GitlabCli.ui.success "Successfully deleted the snippet.\n"
   end
 
   ## INFO
@@ -105,13 +106,15 @@ module GitlabCli
   def info(project, snippet)
     snippet = GitlabCli::Util::Snippet.get(project, snippet)
 
-    printf "Snippet ID: %s\n", snippet.id
-    printf "Title: %s\n", snippet.title
-    printf "File Name: %s\n", snippet.file_name
-    printf "Author: %s <%s>\n", snippet.author.name, snippet.author.email
-    printf "Created at: %s\n", Time.parse(snippet.created_at)
-    printf "Updated at: %s\n", Time.parse(snippet.updated_at)
-    printf "Expires at: %s\n", snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)
+    ui = GitlabCli.ui
+
+    ui.info "Snippet ID: %s" % [snippet.id]
+    ui.info "Title: %s" % [snippet.title]
+    ui.info "File Name: %s" % [snippet.file_name]
+    ui.info "Author: %s <%s>" % [snippet.author.name, snippet.author.email]
+    ui.info "Created at: %s" % [Time.parse(snippet.created_at)]
+    ui.info "Updated at: %s" % [Time.parse(snippet.updated_at)]
+    ui.info "Expires at: %s" % [snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)]
   end
 
   ## DOWNLOAD
@@ -123,7 +126,7 @@ module GitlabCli
   def download(project, snippet, file_path)
     snippet = GitlabCli::Util::Snippet.download(project, snippet, file_path)
 
-    puts "Snippet file saved successfully.\n"
+    GitlabCli.ui.success "Snippet file saved successfully.\n"
   end
 end
 end

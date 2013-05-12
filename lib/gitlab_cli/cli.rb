@@ -23,7 +23,7 @@ module GitlabCli
     option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
     def projects
       if options['pager'] && options['nopager']
-        STDERR.puts "Cannot specify --nopager and --pager options together. Choose one."
+        GitlabCli.ui.error "Cannot specify --nopager and --pager options together. Choose one."
         exit 1
       end
 
@@ -37,11 +37,11 @@ module GitlabCli
       
       if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
         unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
-          STDERR.puts "Problem displaying projects in pager"
+          GitlabCli.ui.error "Problem displaying projects in pager"
           exit 1
         end
       else 
-        puts formatted_projects
+        GitlabCli.ui.info formatted_projects
       end
     end
 
@@ -55,7 +55,7 @@ module GitlabCli
     option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
     def snippets(project)
       if options['pager'] && options['nopager']
-        STDERR.puts "Cannot specify --nopager and --pager options together. Choose one."
+        GitlabCli.ui.error "Cannot specify --nopager and --pager options together. Choose one."
         exit 1
       end
 
@@ -66,15 +66,15 @@ module GitlabCli
       snippets.each do |s|
         formatted_snippets << "%s:\t%s - %s\n" % [s.id, s.title, s.file_name]
       end
-      puts "This project does not have any snippets.\n" if snippets.size == 0
+      GitlabCli.ui.info "This project does not have any snippets.\n" if snippets.size == 0
 
       if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
         unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
-          STDERR.puts "Problem displaying snippets in pager"
+          GitlabCli.ui.error "Problem displaying snippets in pager"
           exit 1
         end
       else 
-        puts formatted_snippets
+        GitlabCli.ui.info formatted_snippets
       end
 
     end
