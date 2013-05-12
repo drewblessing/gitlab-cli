@@ -17,7 +17,7 @@ module GitlabCli
       end
       
       unless project
-        STDERR.puts "Invalid project name or id."
+        GitlabCli.ui.error "Invalid project name or id."
         exit 1
       end
       project.id
@@ -36,27 +36,27 @@ module GitlabCli
     def self.check_response_code(response)
       if response =~ /401/
         ## Unauthorized
-        STDERR.puts "User token was not present or is not valid."
+        GitlabCli.ui.error "User token was not present or is not valid."
         exit 1
       elsif response =~ /403/
         ## Forbidden
-        STDERR.puts "You are not authorized to complete this action"
+        GitlabCli.ui.error "You are not authorized to complete this action"
         exit 1
       elsif response =~ /404/
         ## Not found
-        STDERR.puts "Resource could not be found."
+        GitlabCli.ui.error "Resource could not be found."
         exit 1
       elsif response =~ /405/
         ## Method not allowed
-        STDERR.puts "This request is not supported."
+        GitlabCli.ui.error "This request is not supported."
         exit 1
       elsif response =~ /409/
         ## Conflicting resource
-        STDERR.puts "A conflicting resource already exists."
+        GitlabCli.ui.error "A conflicting resource already exists."
         exit 1
       elsif response =~ /500/
         ## Server error
-        STDERR.puts "Oops.  Something went wrong. Please try again."
+        GitlabCli.ui.error "Oops.  Something went wrong. Please try again."
       end
       response
     end
