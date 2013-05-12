@@ -9,7 +9,7 @@ module GitlabCli
         begin
           response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)

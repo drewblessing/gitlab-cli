@@ -16,7 +16,7 @@ module GitlabCli
             page += 1
           end
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)

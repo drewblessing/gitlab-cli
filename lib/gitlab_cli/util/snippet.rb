@@ -8,7 +8,7 @@ module GitlabCli
         begin 
           response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{GitlabCli::Util.url_token}").to_s
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)
@@ -24,7 +24,7 @@ module GitlabCli
           if File.readable?(code)
             content = File.read(code)
           else
-            STDERR.puts "Cannot read the specified file."
+            GitlabCli.ui.error "Cannot read the specified file."
             exit 1
           end
         else
@@ -40,7 +40,7 @@ module GitlabCli
         begin 
           response = RestClient.post URI.join(GitlabCli::Config[:gitlab_url],url).to_s, payload
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)
@@ -58,7 +58,7 @@ module GitlabCli
         begin 
           response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)
@@ -75,7 +75,7 @@ module GitlabCli
         begin 
           response = RestClient.put URI.join(GitlabCli::Config[:gitlab_url],url).to_s, payload
         rescue SocketError => e
-          STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
           exit 1
         rescue Exception => e
           GitlabCli::Util.check_response_code(e.response)
@@ -95,7 +95,7 @@ module GitlabCli
           begin 
             response = RestClient.delete URI.join(GitlabCli::Config[:gitlab_url],"api/v3/projects/#{id}/snippets/#{snippet}#{GitlabCli::Util.url_token}").to_s
           rescue SocketError => e
-            STDERR.puts "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
+            GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
             exit 1
           rescue Exception => e
             GitlabCli::Util.check_response_code(e.response)
@@ -111,10 +111,10 @@ module GitlabCli
         begin
           File.open(file_path, 'w') { |file| file.write(snippet_content) }
         rescue IOError => e
-          STDERR.puts "Cannot save snippet as file. Please check permissions for %s" % [file_path]
+          GitlabCli.ui.error "Cannot save snippet as file. Please check permissions for %s" % [file_path]
           exit 1
         rescue Errno::ENOENT => e
-          STDERR.puts "Specified directory does not exist.  Directory must exist to save the snippet file."
+          GitlabCli.ui.error "Specified directory does not exist.  Directory must exist to save the snippet file."
           exit 1
         end
       end

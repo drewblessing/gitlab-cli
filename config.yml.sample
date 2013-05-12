@@ -1,4 +1,3 @@
-## Copy this file to config.yml and change the values to match your setup.
 ---
 :gitlab_url: https://gitlab.example.com
 
