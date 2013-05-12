@@ -1,6 +1,8 @@
 require 'thor/shell/basic'
 require 'thor/shell/color'
 
+## Concepts borrowed from Vagrant UI class.
+
 module GitlabCli
   module UI
     class Interface
@@ -31,26 +33,26 @@ module GitlabCli
         CODE
       end
 
-      def ask(message, opts=nil)
+      #def ask(message, opts=nil)
         #super(message)
 
         # We can't ask questions when the output isn't a TTY.
-        raise Errors::UIExpectsTTY if !$stdin.tty? && !Vagrant::Util::Platform.cygwin?
+        #raise Errors::UIExpectsTTY if !$stdin.tty? && !Vagrant::Util::Platform.cygwin?
 
         # Setup the options so that the new line is suppressed
-        opts ||= {}
-        opts[:new_line] = false if !opts.has_key?(:new_line)
-        opts[:prefix]   = false if !opts.has_key?(:prefix)
+        #opts ||= {}
+        #opts[:new_line] = false if !opts.has_key?(:new_line)
+        #opts[:prefix]   = false if !opts.has_key?(:prefix)
 
         # Output the data
-        @shell.ask(:info, message, opts)
+        #@shell.ask(:info, message, opts)
 
         # Get the results and chomp off the newline. We do a logical OR
         # here because `gets` can return a nil, for example in the case
         # that ctrl-D is pressed on the input.
-        input = $stdin.gets || ""
-        input.chomp
-      end
+        #input = $stdin.gets || ""
+        #input.chomp
+      #end
       
     end
 
@@ -80,7 +82,6 @@ module GitlabCli
       # Use some light meta-programming to create the various methods to
       # output text to the UI. These all delegate the real functionality
       # to `say`.
-      #@shell.say(message,color.nil? ? COLOR_MAP[:#{method}] : color)
       [:info, :warn, :error, :success].each do |method|
         class_eval <<-CODE
           def #{method}(message,color=nil,force_new_line = (message.to_s !~ /( |\t)\Z/))
