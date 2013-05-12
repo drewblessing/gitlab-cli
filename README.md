@@ -42,6 +42,20 @@ If you install from rubygems below then you will not need to install these requi
 2. json >= 1.7.7 and < 1.8
 3. rest-client >= 1.6.7 and < 1.7
 
+Note for Linux users: You may need to install the `ruby-devel` package via YUM if you receive an error on install.  The error you would see is:
+
+```
+Building native extensions.  This could take a while...
+ ERROR: Failed to build gem native extension.
+
+/usr/bin/ruby extconf.rb
+mkmf.rb can't find header files for ruby at /usr/lib/ruby/ruby.h
+
+
+Gem files will remain installed in /usr/lib/ruby/gems/1.8/gems/json-1.7.7 for inspection.
+Results logged to /usr/lib/ruby/gems/1.8/gems/json-1.7.7/ext/json/ext/generator/gem_make.out
+```
+
 _How can I find the private token for my user?_
 
 Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  Copy the private token from the box and paste into your config.  
