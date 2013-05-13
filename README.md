@@ -37,7 +37,7 @@ You now have access to the `gitlab` command.
 
 _Required Gems_
 
-If you install from rubygems below then you will not need to install these required gems yourself. The gem package manager will attempt to install the proper versions for you.
+If you install from rubygems then you will not need to install these required gems yourself. The gem package manager will attempt to install the proper versions for you.
 
 1. thor >= 0.17.0 and < 0.19
 2. json >= 1.7.7 and < 1.8
@@ -66,9 +66,9 @@ _How can I add the repo bin path to my environment PATH variable?_
 Place it in your ~/.bash_profile file.  You should end up with something like this:
 `export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
 
-## Commands
+## How to use (Commands) 
 
-View a list of all commands supported by Gitlab CLI with output examples.
+View a list of all the commands you can use to interact with Gitlab CLI, complete with examples.
 
 [Commands](https://github.com/drewblessing/gitlab-cli/blob/master/doc/Commands.md)
 
