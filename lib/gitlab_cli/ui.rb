@@ -33,7 +33,7 @@ module GitlabCli
         CODE
       end
 
-      #def ask(message, opts=nil)
+      def ask(message, opts=nil)
         #super(message)
 
         # We can't ask questions when the output isn't a TTY.
@@ -50,13 +50,15 @@ module GitlabCli
         # Get the results and chomp off the newline. We do a logical OR
         # here because `gets` can return a nil, for example in the case
         # that ctrl-D is pressed on the input.
-        #input = $stdin.gets || ""
-        #input.chomp
-      #end
-      
+        @shell.ask message
+      end
+
+      def yes?(message, color=nil)
+        @shell.yes? message, color
+      end
     end
 
-    class Color < Interface 
+    class Color < Basic 
       def initialize
         #super
         

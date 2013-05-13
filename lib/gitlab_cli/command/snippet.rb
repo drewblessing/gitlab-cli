@@ -88,13 +88,14 @@ module GitlabCli
 
     $ gitlab snippet delete 10 6
   D
+   option :yes, :desc => "Delete without asking for confirmation", :required => false, :type => :boolean, :aliases => ["-y"]  
   def delete(project, snippet)
-    response = ask "Are you sure you want to delete this snippet? (Yes\\No)"
-    exit unless response.downcase == 'yes'
+    response = GitlabCli.ui.yes? "Are you sure you want to delete this snippet? (Yes\\No)" unless options['yes']
+    exit unless options['yes'] || response
 
     snippet = GitlabCli::Util::Snippet.delete(project, snippet)
 
-    GitlabCli.ui.success "Successfully deleted the snippet.\n"
+    GitlabCli.ui.success "Successfully deleted the snippet."
   end
 
   ## INFO
