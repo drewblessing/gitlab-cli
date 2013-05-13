@@ -9,7 +9,8 @@ NOTE: This version has NOT been released yet.  As such, it has not been uploaded
 This version contains breaking changes!!
 
 * Now packaged as a gem! 
-* Configuration file loaded from user's home directory - ~/.gitlab.yml
+* Configuration file loaded from user's home directory - ~/.gitlab_cli.yml
+* Easier to use within your Ruby scripts/applications (see "Use as a library")
 
 ## GitLab Versions
 
@@ -205,6 +206,23 @@ Usage 2: `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
 Using project ID: `gitlab snippet save 13 16 /path/for/new/file`
 
 Using project full namespace/project format: `gitlab snippet download user1/project1 16 /path/for/new/file`
+
+## Use as a library
+
+Now that Gitlab CLI is distributed as a gem it is increasingly easy to use in your Ruby scripts or applications.  Here's a quick rundown on how to get started.
+
+First, require 'gitlab_cli'. `require 'gitlab_cli'`
+Next, call the appropriate class and method within Gitlab CLI.  You will probably want to stick with calling the Util classes.  They will return objects with all the pertinent information. Below are a few examples of how you may use Gitlab CLI.  For a complete list of classes, methods and objects, please check out the link below.
+
+* [Util Classes and Methods](https://github.com/drewblessing/gitlab-cli/blob/master/doc/Classes.md)
+* [Objects](https://github.com/drewblessing/gitlab-cli/blob/master/doc/Classes.md)
+
+Get all projects in Gitlab. Returns an array of Project objects.
+`projects = GitlabCli::Util::Projects.get_all`
+
+Get a specific snippet. Assumes you know the project id/full namespace and snippet id.
+`snippet = GitlabCli::Util::Snippet.get(3, 19)`
+`snippet = GitlabCli::Util::Snippet.get("namespace/project_name", 19)`
 
 ## Issues
 
