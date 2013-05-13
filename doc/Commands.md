@@ -121,6 +121,7 @@ URL: https://gitlab.example.com/user1/project1/snippets/20
 ```
 
 ### _Delete a snippet (Asks for confirmation)_
+Use -y flag to bypass confirmation. Use at your own risk.
 
 Usage: `gitlab snippet delete [PROJECT] [SNIPPET_ID]`
 
