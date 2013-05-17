@@ -17,8 +17,8 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 * 5.1.0
 * 5.0.x
 
-[How to use (Commands)](#Commands)
-[Use as a Library](#Library)
+[How to use (Commands)](#how-to-use-commands)
+[Use as a Library](#use-as-a-library)
 
 ## Installation and Setup 
 
@@ -68,14 +68,12 @@ Place it in your ~/.bash_profile file.  You should end up with something like th
 `export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
 
 ## How to use (Commands) 
-<a id="Commands"></a>
 
 View a list of all the commands you can use to interact with Gitlab CLI, complete with examples.
 
 [Commands](doc/Commands.md)
 
 ## Use as a library
-<a id="Library"></a>
 
 Now that Gitlab CLI is distributed as a gem it is increasingly easy to use in your Ruby scripts or applications.  Click the link below to see documentation on how to get started using Gitlab CLI as a library.
 
