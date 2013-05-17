@@ -2,9 +2,7 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
-## Version 2.0.0 Pre-Release
-
-NOTE: This version has NOT been released yet.  As such, it has not been uploaded to RubyGems and will not be available via `gem install gitlab_cli` yet.  Please checkout tag v1.1.1 and follow instructions in that README.md until this is marked as released and stable.
+## Version 2.0.0 
 
 This version contains breaking changes!!
 
@@ -18,6 +16,9 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 
 * 5.1.0
 * 5.0.x
+
+[How to use (Commands)](#Commands)
+[Use as a Library](#Library)
 
 ## Installation and Setup 
 
@@ -67,12 +68,14 @@ Place it in your ~/.bash_profile file.  You should end up with something like th
 `export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
 
 ## How to use (Commands) 
+<a id="Commands"></a>
 
 View a list of all the commands you can use to interact with Gitlab CLI, complete with examples.
 
 [Commands](doc/Commands.md)
 
 ## Use as a library
+<a id="Library"></a>
 
 Now that Gitlab CLI is distributed as a gem it is increasingly easy to use in your Ruby scripts or applications.  Click the link below to see documentation on how to get started using Gitlab CLI as a library.
 
