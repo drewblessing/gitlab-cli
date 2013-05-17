@@ -7,7 +7,7 @@ _Many people prefer to work from the CLI when possible. This tool aims to bring 
 This version contains breaking changes!!
 
 * Now packaged as a gem! 
-* Configuration file loaded from user's home directory - ~/.gitlab_cli.yml
+* Configuration file loaded from user's home directory - ~/.gitlab.yml
 * Easier to use within your Ruby scripts/applications (see "Use as a library")
 
 ## GitLab Versions
@@ -16,9 +16,6 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 
 * 5.1.0
 * 5.0.x
-
-[How to use (Commands)](#how-to-use-commands)
-[Use as a Library](#use-as-a-library)
 
 ## Installation and Setup 
 
