@@ -70,13 +70,13 @@ Place it in your ~/.bash_profile file.  You should end up with something like th
 
 View a list of all the commands you can use to interact with Gitlab CLI, complete with examples.
 
-[Commands](https://github.com/drewblessing/gitlab-cli/blob/master/doc/Commands.md)
+[Commands](doc/Commands.md)
 
 ## Use as a library
 
 Now that Gitlab CLI is distributed as a gem it is increasingly easy to use in your Ruby scripts or applications.  Click the link below to see documentation on how to get started using Gitlab CLI as a library.
 
-[Use as a library](http://github.com/drewblessing/gitlab-cli/blob/master/doc/Library.md)
+[Use as a library](doc/Library.md)
 
 ## Issues
 
