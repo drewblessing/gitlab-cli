@@ -2,6 +2,8 @@
 
 ### _Project_
 
+GitlabCLI::Project
+
 Attributes:
 
 * id - The numerical ID of the project
@@ -21,6 +23,8 @@ Attributes:
 
 ### _Snippet_
 
+GitlabCLI::Snippet
+
 * id - The numerical ID of the snippet
 * title - The title of the snippet
 * file_name - The file name for the snippet
@@ -32,6 +36,8 @@ Attributes:
 * author - The author of the snippet (returns a User object)
 
 ### _User_
+
+GitlabCLI::User
 
 * id - The numerical ID of the user
 * username - The short username of the user
