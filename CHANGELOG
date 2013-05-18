@@ -1,3 +1,7 @@
+2013-05-17 Drew Blessing
+  * Issue 26: Update docs for 2.0.0
+  * Version 2.0.0: Tagged version 2.0.0
+
 2013-05-12 Drew Blessing
   * Issue 19: Utilize Thor actions
   * Issue 25: Change from ~/.gitlab.yml to ~/.gitlab_cli.yml
