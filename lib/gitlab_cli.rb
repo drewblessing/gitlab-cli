@@ -16,7 +16,7 @@ module GitlabCli
 
   GitlabCli.ui = STDOUT.tty? ? GitlabCli::UI::Color.new : GitlabCli::UI::Basic.new
 
-  CONFIG_PATH = '~/.gitlab_cli.yml'
+  CONFIG_PATH = '~/.gitlab.yml'
   config = File.expand_path(CONFIG_PATH)
   unless File.exist?(config)
     File.open(File.expand_path(File.dirname(__FILE__) + "/../config.yml.sample", "r") )do |sample|
