@@ -56,6 +56,16 @@ module GitlabCli
       def yes?(message, color=nil)
         @shell.yes? message, color
       end
+
+      def handle_error(e, verbose)
+        error e.message
+
+        if verbose
+          e.backtrace.each do |line|
+            error line, :white    
+          end
+        end
+      end
     end
 
     class Color < Basic 

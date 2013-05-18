@@ -1,22 +1,39 @@
 module GitlabCli
   module Util
     class Project
-      # Get project object
+      # Get
       def self.get(project)
         id = GitlabCli::Util.numeric?(project) ? project : GitlabCli::Util.get_project_id(project)
-        url = "api/v3/projects/%s%s" % [id,GitlabCli::Util.url_token]
+        url = "projects/%s" % [id]
 
         begin
-          response = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
-        rescue SocketError => e
-          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
-          exit 1
-        rescue Exception => e
-          GitlabCli::Util.check_response_code(e.response)
-        end
+          response = GitlabCli::Util.rest "get", url
 
-        data = JSON.parse(response)
-        GitlabCli::Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
+        rescue Exception => e
+          raise e
+
+        else
+          data = JSON.parse(response)
+          GitlabCli::Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
+
+        end
+      end
+
+      # Create
+      def self.create(name, description, branch, public, issues, merge_requests, wall, wiki)
+        payload = {} #{:title => title, :file_name => file_name, :code => content}
+
+        begin
+          response = GitlabCli::Util.rest "post", "projects", payload
+
+        rescue Exception => e
+          raise e
+
+        else
+          data = JSON.parse(response)
+          GitlabCli::Project.new(data['id'],data['name'],data['description'],data['default_branch'],data['public'],data['path'],data['path_with_namespace'],data['issues_enabled'],data['merge_requests_enabled'],data['wall_enabled'],data['wiki_enabled'],data['created_at'],data['owner'])
+
+        end
       end
 
       # Get a project's path with namespace
