@@ -17,6 +17,8 @@ This tool has only been tested with the following versions of GitLab.  Some or a
 * 5.1.0
 * 5.0.x
 
+5.2.0 is _not_ supported at this time. I am working a particular regression in GitLab that is causing issues with the edit and view function of GitLab CLI. I will work with GitLabHQ to gets these issues fixed as soon as possible.  Thanks for your patience.
+
 ## Installation and Setup 
 
 _How do I get started?_ 
