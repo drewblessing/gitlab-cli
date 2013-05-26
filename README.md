@@ -14,10 +14,32 @@ This version contains breaking changes!!
 
 This tool has only been tested with the following versions of GitLab.  Some or all of the features may or may not work with other versions but they are not _officially_ supported.
 
+* 5.2.0 - See note below.
 * 5.1.0
 * 5.0.x
 
-5.2.0 is _not_ supported at this time. I am working a particular regression in GitLab that is causing issues with the edit and view function of GitLab CLI. I will work with GitLabHQ to gets these issues fixed as soon as possible.  Thanks for your patience.
+Note: 5.2.0 uses a newer version of Grape API framework which caused a regression in all APIs that return raw/blob content.  If you are running GitLab 5.2.0, you will need to make a few manual changes to the Gemfile and Gemfile.lock to use GitLab CLI.
+
+ 1 Stop GitLab 
+ 
+ 2 Edit 'Gemfile' and modify the 2 lines with Grape:
+
+```
+gem "grape", "~> 0.3.1"
+gem "grape-entity", "~> 0.2.0"
+```
+ 3 Edit 'Gemfile.lock' and modify the 2 lines with Grape:
+
+```
+    grape (0.3.2)
+      ...<more stuff here>
+    grape-entity (0.2.0)
+```
+ 4 To be safe, run `bundle install --deployment --without development test postgres` or whatever bundle install command is appropriate for your installation.
+ 
+ 5 Start GitLab
+
+Now the GitLab CLI tool should work properly with your installation.  I am working with GitLab HQ to find a permanent solution to this regression.  Thanks for your patience.
 
 ## Installation and Setup 
 
