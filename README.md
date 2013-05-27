@@ -14,8 +14,32 @@ This version contains breaking changes!!
 
 This tool has only been tested with the following versions of GitLab.  Some or all of the features may or may not work with other versions but they are not _officially_ supported.
 
+* 5.2.0 - See note below.
 * 5.1.0
 * 5.0.x
+
+Note: 5.2.0 uses a newer version of Grape API framework which caused a regression in all APIs that return raw/blob content.  If you are running GitLab 5.2.0, you will need to make a few manual changes to the Gemfile and Gemfile.lock to use GitLab CLI.
+
+ 1 Stop GitLab 
+ 
+ 2 Edit 'Gemfile' and modify the 2 lines with Grape:
+
+```
+gem "grape", "~> 0.3.1"
+gem "grape-entity", "~> 0.2.0"
+```
+ 3 Edit 'Gemfile.lock' and modify the 2 lines with Grape:
+
+```
+    grape (0.3.2)
+      ...<more stuff here>
+    grape-entity (0.2.0)
+```
+ 4 To be safe, run `bundle install --deployment --without development test postgres` or whatever bundle install command is appropriate for your installation.
+ 
+ 5 Start GitLab
+
+Now the GitLab CLI tool should work properly with your installation.  I am working with GitLab HQ to find a permanent solution to this regression.  Thanks for your patience.
 
 ## Installation and Setup 
 
@@ -41,19 +65,11 @@ If you install from rubygems then you will not need to install these required ge
 2. json >= 1.7.7 and < 1.8
 3. rest-client >= 1.6.7 and < 1.7
 
-Note for Linux users: You may need to install the `ruby-devel` package via YUM if you receive an error on install.  The error you would see is:
+_Required system packages_
 
-```
-Building native extensions.  This could take a while...
- ERROR: Failed to build gem native extension.
-
-/usr/bin/ruby extconf.rb
-mkmf.rb can't find header files for ruby at /usr/lib/ruby/ruby.h
-
-
-Gem files will remain installed in /usr/lib/ruby/gems/1.8/gems/json-1.7.7 for inspection.
-Results logged to /usr/lib/ruby/gems/1.8/gems/json-1.7.7/ext/json/ext/generator/gem_make.out
-```
+1. ruby-devel
+2. make
+3. gcc
 
 _How can I find the private token for my user?_
 
