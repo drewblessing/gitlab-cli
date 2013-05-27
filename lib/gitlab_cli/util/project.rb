@@ -20,11 +20,12 @@ module GitlabCli
       end
 
       # Create
-      def self.create(name, description, branch, issues, merge_requests, wall, wiki, snippets)
+      def self.create(name, description, branch, namespace_id, issues, merge_requests, wall, wiki, snippets)
         payload = {
           :name                     => name, 
           :description              => description, 
           :default_branch           => branch,
+          :namespace_id             => namespace_id,
           :issues_enabled           => issues,
           :merge_requests_enabled   => merge_requests, 
           :wall_enabled             => wall,

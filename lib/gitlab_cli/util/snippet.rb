@@ -24,8 +24,7 @@ module GitlabCli
           if File.readable?(code)
             content = File.read(code)
           else
-            GitlabCli.ui.error "Cannot read the specified file."
-            exit 1
+            raise "Cannot read the specified file."
           end
         else
           content = STDIN.read

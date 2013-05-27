@@ -12,6 +12,7 @@ module GitlabCli
       D
       option :description, :desc => "The project's description", :type => :string, :aliases => ["-d"]
       option :branch, :desc => "The project's default branch", :type => :string, :aliases => ["-b"]
+      option :namespace_id, :desc => "The namespace ID this project should be added to. Namespace ID is synonymous with group ID", :type => :string, :aliases => ["-g","-n"]
       option :issues, :desc => "Enable issues for the project", :type => :boolean
       option :wall, :desc => "Enable issues for the project", :type => :boolean
       option :merge_requests, :desc => "Enable merge_requests for the project", :type => :boolean
@@ -20,7 +21,7 @@ module GitlabCli
       def add(project_name)
         ui = GitlabCli.ui
         begin
-          project = GitlabCli::Util::Project.create project_name, options['description'], options['branch'], options['issues'], options['merge_requests'], options['wall'], options['wiki'], options['snippets']
+          project = GitlabCli::Util::Project.create project_name, options['description'], options['branch'], options['namespace_id'], options['issues'], options['merge_requests'], options['wall'], options['wiki'], options['snippets']
         
         rescue ResponseCodeException => e
           case e.response_code

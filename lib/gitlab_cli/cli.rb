@@ -22,26 +22,30 @@ module GitlabCli
     option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
     option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
     def projects
-      if options['pager'] && options['nopager']
-        GitlabCli.ui.error "Cannot specify --nopager and --pager options together. Choose one."
-        exit 1
-      end
-  
-      projects = GitlabCli::Util::Projects.get_all
-      formatted_projects = ""
-      pager = ENV['pager'] || 'less'
+      ui = GitlabCli.ui
+      begin
+        raise "Cannot specify --nopager and --pager options together. Choose one." if options['pager'] && options['nopager']
 
-      projects.each do |p|
-        formatted_projects << "%s:\t%s\n" % [p.id, p.path_with_namespace]
-      end
-    
-      if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
-        unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
-          GitlabCli.ui.error "Problem displaying projects in pager"
-          exit 1
+        projects = GitlabCli::Util::Projects.get_all
+        formatted_projects = ""
+        pager = ENV['pager'] || 'less'
+
+        projects.each do |p|
+          formatted_projects << "%s:\t%s\n" % [p.id, p.path_with_namespace]
         end
-      else 
-        GitlabCli.ui.info formatted_projects
+    
+      rescue Exception => e
+        ui.error "Unable to get snippets"
+        ui.handle_error e
+
+      else
+        if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
+          unless system("echo %s | %s" % [Shellwords.escape(formatted_projects), pager])
+            raise "Problem displaying projects in pager"
+          end
+        else 
+          ui.info formatted_projects
+        end
       end
     end
 
@@ -66,21 +70,6 @@ module GitlabCli
           formatted_snippets << "%s:\t%s - %s\n" % [s.id, s.title, s.file_name]
         end
 
-        if snippets.size == 0
-          ui.info "This project does not have any snippets.\n"
-  
-        else
-          if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
-            unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
-              raise "Problem displaying snippets in pager"
-            end
-
-          else 
-            ui.info formatted_snippets
-
-          end
-        end
-      
       rescue ResponseCodeException => e
         case e.response_code
         when 404
@@ -97,6 +86,21 @@ module GitlabCli
         ui.error "Unable to get snippets"
         ui.handle_error e
 
+      else
+        if snippets.size == 0
+          ui.info "This project does not have any snippets.\n"
+  
+        else
+          if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
+            unless system("echo %s | %s" % [Shellwords.escape(formatted_snippets), pager])
+              raise "Problem displaying snippets in pager"
+            end
+
+          else 
+            ui.info formatted_snippets
+
+          end
+        end
       end
     end
 
@@ -119,6 +123,11 @@ module GitlabCli
           formatted_groups << "%s:\t%s\n" % [g.id, g.name]
         end
       
+      rescue Exception => e
+        ui.error "Unable to get groups"
+        ui.handle_error e
+
+      else
         if groups.size == 0
           ui.info "There are no groups"
 
@@ -133,10 +142,6 @@ module GitlabCli
 
           end
         end
-
-      rescue Exception => e
-        ui.error "Unable to get groups"
-        ui.handle_error e
       end
     end
 
