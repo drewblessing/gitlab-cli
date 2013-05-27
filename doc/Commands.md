@@ -47,7 +47,9 @@ Only [PROJECT_NAME] is required.
 
 Usage 1: `gitlab project add [PROJECT_NAME] [OPTIONS]`
 
-Usage 2: `gitlab project add "My Project" -d "This project is going to be awesome" -b master -n 2 --issues=true --wall=false --merge-requests=true --wiki=false`
+Usage 2: 
+```gitlab project add "My Project" -d "This project is going to be awesome" -b master -n 2 --issues=true --wall=false --merge-requests=true --wiki=false
+```
 
 Example output:
 ```
