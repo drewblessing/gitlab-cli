@@ -45,7 +45,7 @@ Created at: Mon Apr 01 18:42:38 UTC 2013
 ### _Add a project_
 Only [PROJECT_NAME] is required.
 
-Usage 1: `gitlab project add [PROJECT_NAME] [OPTIONS]`
+Usage 1: `gitlab project add [PROJECT_NAME] --description=DESCRIPTION --branch=DEFAULT_BRANCH --namespace-id=NAMESPACE_ID --issues=BOOLEAN --merge_requests=BOOLEAN --wall=BOOLEAN --wiki=BOOLEAN`
 
 Usage 2: 
 ```
