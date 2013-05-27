@@ -6,24 +6,23 @@ module GitlabCli
 
         begin 
           response = Array.new
-          page = 1
-          while true do
-            url = "api/v3/projects/%s/snippets%s&page=%s&per_page=100" % [id, GitlabCli::Util.url_token, page]
-            page_data = RestClient.get URI.join(GitlabCli::Config[:gitlab_url],url).to_s
-            # Length of 2 indicates empty Array (represented as a string)
-            break if page_data.length == 2         
-            response.concat JSON.parse(page_data)
+          per_page = 100
+          page = 0
+          # If we get `per_page` results per page then we keep going.
+          # If we get less than that we're done.
+          while response.length == page * per_page do
             page += 1
+            url = "projects/%s/snippets?page=%s&per_page=%s" % [id, page, per_page]
+            page_data = GitlabCli::Util.rest "get", url
+            response.concat JSON.parse(page_data)
           end
-        rescue SocketError => e
-          GitlabCli.ui.error "Could not contact the GitLab server. Please check connectivity and verify the 'gitlab_url' configuration setting."
-          exit 1
         rescue Exception => e
-          GitlabCli::Util.check_response_code(e.response)
-        end
+          raise e
 
-        snippets = response.map do |s|
-          GitlabCli::Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
+        else
+          snippets = response.map do |s|
+            GitlabCli::Snippet.new(s['id'],s['title'],s['file_name'],s['expires_at'],s['updated_at'],s['created_at'],id,s['author'])
+          end
         end
       end
     end

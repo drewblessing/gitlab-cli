@@ -1,3 +1,5 @@
+require 'digest'
+
 module GitlabCli
   module Command
     class Snippet < Thor
@@ -20,11 +22,19 @@ module GitlabCli
   option :title, :desc => "The title to use for the new snippet", :required => true, :type => :string, :aliases => ["-t"]
   option :file_name, :desc => "A file name for this snippet", :required => true, :type => :string, :aliases => ["-n", "-f"]  
   def add(project, file=nil)
-    snippet = GitlabCli::Util::Snippet.create(project, options['title'], options['file_name'], file)
+    ui = GitlabCli.ui
+    begin
+      snippet = GitlabCli::Util::Snippet.create(project, options['title'], options['file_name'], file)
 
-    GitlabCli.ui.success "Snippet created."
-    GitlabCli.ui.info "ID: %s" % [snippet.id]
-    GitlabCli.ui.info "URL: %s" % [snippet.view_url]
+    rescue Exception => e
+      ui.error "Unable to add snippet"
+      ui.handle_error e
+
+    else
+      ui.success "Snippet created."
+      ui.info "ID: %s" % [snippet.id]
+      ui.info "URL: %s" % [snippet.view_url]
+    end
   end 
 
   ## VIEW
@@ -39,13 +49,30 @@ module GitlabCli
     $ gitlab snippet view 10 6
   D
   def view(project, snippet)
-    snippet = GitlabCli::Util::Snippet.view(project, snippet)    
+    ui = GitlabCli.ui
+    begin
+      snippet = GitlabCli::Util::Snippet.view(project, snippet)    
 
-    pager = ENV['pager'] || 'less'
+    rescue ResponseCodeException => e
+      case e.response_code
+      when 404
+        ui.error "Unable to view snippet"
+        ui.error "Ensure project and snippet exist."
+      else
+        ui.error "Unable to view snippet"
+        ui.handle_error e
+      end
 
-    unless system("echo %s | %s" % [Shellwords.escape(snippet), pager])
-      GitlabCli.ui.error "Problem displaying snippet"
-      exit 1
+    rescue Exception => e
+      ui.error "Unable to view snippet"
+      ui.handle_error e
+
+    else
+      pager = ENV['pager'] || 'less'
+
+      unless system("echo %s | %s" % [Shellwords.escape(snippet), pager])
+        ui.error "Problem displaying snippet"
+      end
     end
   end
 
@@ -61,21 +88,50 @@ module GitlabCli
     $ gitlab snippet edit 10 6
   D
   def edit(project, snippet)
-    snippet_obj = GitlabCli::Util::Snippet.get(project, snippet)
-    snippet_code = GitlabCli::Util::Snippet.view(project, snippet)
+    ui = GitlabCli.ui
+    begin
+      snippet_obj = GitlabCli::Util::Snippet.get(project, snippet)
+      snippet_code = GitlabCli::Util::Snippet.view(project, snippet)
 
-    editor = ENV['editor'] || 'vi'
+    rescue ResponseCodeException => e
+      case e.response_code
+      when 404
+        ui.error "Unable to edit snippet"
+        ui.error "Ensure project and snippet exist."
+      else
+        ui.error "Unable to edit snippet"
+        ui.handle_error e
+      end
 
-    temp_file_path = "/tmp/snippet.%s" % [rand]
-    File.open(temp_file_path, 'w') { |file| file.write(snippet_code) }
+    rescue Exception => e
+      ui.error "Unable to edit snippet"
+      ui.handle_error e
 
-    system("vi %s" % [temp_file_path])
+    else
+      editor = ENV['editor'] || 'vi'
 
-    snippet_code = File.read(temp_file_path)
+      temp_file_path = "/tmp/snippet.%s" % [rand]
+      File.open(temp_file_path, 'w') do |file| 
+        file.write(snippet_code.inspect) 
+      end
+      pre_digest = Digest::MD5.digest(File.read(temp_file_path))
 
-    snippet = GitlabCli::Util::Snippet.update(project, snippet_obj, snippet_code)
-    GitlabCli.ui.success "Snippet updated."
-    GitlabCli.ui.info "URL: %s" % [snippet.view_url]
+      unless system("vi %s" % [temp_file_path])
+        ui.error "Could not open system editor"
+      end
+
+      snippet_code = File.read(temp_file_path)
+      post_digest = Digest::MD5.digest(snippet_code)
+      File.delete(temp_file_path)
+
+      if pre_digest == post_digest
+        ui.info "Snippet was not updated. You quit without saving."
+      else
+        snippet = GitlabCli::Util::Snippet.update(project, snippet_obj, snippet_code)
+        ui.success "Snippet updated."
+        ui.info "URL: %s" % [snippet.view_url]
+      end
+    end
   end
 
   ## DELETE
@@ -90,12 +146,30 @@ module GitlabCli
   D
    option :yes, :desc => "Delete without asking for confirmation", :required => false, :type => :boolean, :aliases => ["-y"]  
   def delete(project, snippet)
-    response = GitlabCli.ui.yes? "Are you sure you want to delete this snippet? (Yes\\No)" unless options['yes']
-    exit unless options['yes'] || response
+    ui = GitlabCli.ui
+    begin
+      response = GitlabCli.ui.yes? "Are you sure you want to delete this snippet? (Yes\\No)" unless options['yes']
+      exit unless options['yes'] || response
 
-    snippet = GitlabCli::Util::Snippet.delete(project, snippet)
+      snippet = GitlabCli::Util::Snippet.delete(project, snippet)
 
-    GitlabCli.ui.success "Successfully deleted the snippet."
+    rescue ResponseCodeException => e
+      case e.response_code
+      when 404
+        ui.error "Unable to delete snippet"
+        ui.error "Ensure project and snippet exist."
+      else
+        ui.error "Unable to delete snippet"
+        ui.handle_error e
+      end
+
+    rescue Exception => e
+      ui.error "Unable to delete snippet"
+      ui.handle_error e
+
+    else
+      ui.success "Successfully deleted the snippet."
+    end
   end
 
   ## INFO
@@ -105,17 +179,33 @@ module GitlabCli
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def info(project, snippet)
-    snippet = GitlabCli::Util::Snippet.get(project, snippet)
-
     ui = GitlabCli.ui
+    begin
+      snippet = GitlabCli::Util::Snippet.get(project, snippet)
 
-    ui.info "Snippet ID: %s" % [snippet.id]
-    ui.info "Title: %s" % [snippet.title]
-    ui.info "File Name: %s" % [snippet.file_name]
-    ui.info "Author: %s <%s>" % [snippet.author.name, snippet.author.email]
-    ui.info "Created at: %s" % [Time.parse(snippet.created_at)]
-    ui.info "Updated at: %s" % [Time.parse(snippet.updated_at)]
-    ui.info "Expires at: %s" % [snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)]
+    rescue ResponseCodeException => e
+      case e.response_code
+      when 404
+        ui.error "Unable to view info for snippet"
+        ui.error "Ensure project and snippet exist."
+      else
+        ui.error "Unable to view info for snippet"
+        ui.handle_error e
+      end
+
+    rescue Exception => e
+      ui.error "Unable to view info for snippet"
+      ui.handle_error e
+
+    else
+      ui.info "Snippet ID: %s" % [snippet.id]
+      ui.info "Title: %s" % [snippet.title]
+      ui.info "File Name: %s" % [snippet.file_name]
+      ui.info "Author: %s <%s>" % [snippet.author.name, snippet.author.email]
+      ui.info "Created at: %s" % [Time.parse(snippet.created_at)]
+      ui.info "Updated at: %s" % [Time.parse(snippet.updated_at)]
+      ui.info "Expires at: %s" % [snippet.expires_at.nil? ? "Never" : Time.parse(snippet.expires_at)]
+    end
   end
 
   ## DOWNLOAD
@@ -125,9 +215,27 @@ module GitlabCli
     [PROJECT] may be specified as [NAMESPACE]/[PROJECT] or [PROJECT_ID].  Use 'gitlab projects' to see a list of projects with their namespace and id. [SNIPPET_ID] must be specified as the id of the snippet.  Use 'gitlab snippets [PROJECT]' command to view the snippets available for a project.
   D
   def download(project, snippet, file_path)
-    snippet = GitlabCli::Util::Snippet.download(project, snippet, file_path)
+    ui = GitlabCli.ui
+    begin
+      snippet = GitlabCli::Util::Snippet.download(project, snippet, file_path)
 
-    GitlabCli.ui.success "Snippet file saved successfully.\n"
+    rescue ResponseCodeException => e
+      case e.response_code
+      when 404
+        ui.error "Unable to download snippet"
+        ui.error "Ensure project and snippet exist."
+      else
+        ui.error "Unable to download snippet"
+        ui.handle_error e
+      end
+
+    rescue Exception => e
+      ui.error "Unable to download snippet"
+      ui.handle_error e
+
+    else
+      ui.success "Snippet file saved successfully.\n"
+    end
   end
 end
 end

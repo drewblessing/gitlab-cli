@@ -20,8 +20,17 @@ module GitlabCli
       end
 
       # Create
-      def self.create(name, description, branch, public, issues, merge_requests, wall, wiki)
-        payload = {} #{:title => title, :file_name => file_name, :code => content}
+      def self.create(name, description, branch, issues, merge_requests, wall, wiki, snippets)
+        payload = {
+          :name                     => name, 
+          :description              => description, 
+          :default_branch           => branch,
+          :issues_enabled           => issues,
+          :merge_requests_enabled   => merge_requests, 
+          :wall_enabled             => wall,
+          :wiki_enabled             => wiki,
+          #:snippets_enabled         => snippets,
+        }
 
         begin
           response = GitlabCli::Util.rest "post", "projects", payload

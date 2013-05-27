@@ -5,14 +5,16 @@ module GitlabCli
     attr_accessor :ui
   end
   
-  autoload :Command,          'gitlab_cli/command'
-  autoload :Config,           'gitlab_cli/config'
-  autoload :Project,          'gitlab_cli/project'
-  autoload :Snippet,          'gitlab_cli/snippet'
-  autoload :User,             'gitlab_cli/user'
-  autoload :UI,               'gitlab_cli/ui'
-  autoload :Util,             'gitlab_cli/util'
-  autoload :Version,          'gitlab_cli/version'
+  autoload :Command,                  'gitlab_cli/command'
+  autoload :Config,                   'gitlab_cli/config'
+  autoload :Group,                    'gitlab_cli/group'
+  autoload :Project,                  'gitlab_cli/project'
+  autoload :ResponseCodeException,    'gitlab_cli/exception/response_code_exception'
+  autoload :Snippet,                  'gitlab_cli/snippet'
+  autoload :User,                     'gitlab_cli/user'
+  autoload :UI,                       'gitlab_cli/ui'
+  autoload :Util,                     'gitlab_cli/util'
+  autoload :Version,                  'gitlab_cli/version'
 
   GitlabCli.ui = STDOUT.tty? ? GitlabCli::UI::Color.new : GitlabCli::UI::Basic.new
 

@@ -1,7 +1,9 @@
 module GitlabCli
   module Util
+    autoload :Groups,        'gitlab_cli/util/groups'
     autoload :Projects,      'gitlab_cli/util/projects'
     autoload :Snippets,      'gitlab_cli/util/snippets'
+    autoload :Group,         'gitlab_cli/util/group'
     autoload :Project,       'gitlab_cli/util/project'
     autoload :Snippet,       'gitlab_cli/util/snippet'
 
@@ -12,10 +14,8 @@ module GitlabCli
     ## Internal methods
     # Rest Call
     def self.rest(method, url, payload=nil)
-      ui = GitlabCli.ui
-
-      url_w_token = "api/v3/%s%s" % [url, url_token]
-      full_url = URI.join(GitlabCli::Config[:gitlab_url],url_w_token).to_s
+      endpoint = url_with_token(url)
+      full_url = URI.join(GitlabCli::Config[:gitlab_url], endpoint).to_s
 
       begin
         case method
@@ -30,37 +30,42 @@ module GitlabCli
         end
 
       rescue SocketError => e
-        raise "Could not contact the Gitlab server. Please check connectivity and verify the 'gitlab_url' configuration setting"
-        raise e
+        raise "Could not find the Gitlab server. Please check DNS and verify the 'gitlab_url' configuration setting"
+      
+      rescue RestClient::BadGateway => e
+        raise "Could not contact the Gitlab server.  Please check that Gitlab server is running, firewalls are not blocking the connection, and verify the 'gitlab_url' configuration setting"
 
       rescue Exception => e
         if e.response
-          check_response_code(e.response)
-
+          resp = check_response_code(e.response)
+          raise e 
         else
-
           raise e
         end
       end
     end
 
     # Get project id
-    def self.get_project_id(project)
+    def self.get_project_id(project_name)
       projects = GitlabCli::Util::Projects.get_all
       project = projects.detect do |p|
-        p.path_with_namespace == project
+        p.path_with_namespace == project_name
       end
       
       unless project
-        GitlabCli.ui.error "Invalid project name or id."
-        exit 1
+        raise "Cannot find project with name \"%s\"" % [project_name]
       end
       project.id
     end
 
-    # Construct private token for URL
-    def self.url_token
-      "?private_token=#{GitlabCli::Config[:private_token]}"
+    # Construct URL with private token
+    # Detect if URL already contains parameters.
+    # If so, use an asterisk instead of a question
+    def self.url_with_token(url)
+      params = url.include? "?"
+      char = params ? "&" : "?"
+      token = "private_token=#{GitlabCli::Config[:private_token]}"
+      "api/v3/%s%s%s" % [url, char, token]
     end
 
     def self.numeric?(string)
@@ -81,7 +86,8 @@ module GitlabCli
         raise "You are not authorized to complete this action"
       when /404/
         ## Not found
-        raise "Resource could not be found."
+        raise ResponseCodeException.new(404), "Resource could not be found"
+        #raise "Resource could not be found."
       when /405/
         ## Method not allowed
         raise "This request is not supported."

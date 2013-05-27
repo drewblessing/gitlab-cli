@@ -57,7 +57,7 @@ module GitlabCli
         @shell.yes? message, color
       end
 
-      def handle_error(e, verbose)
+      def handle_error(e, verbose=false)
         error e.message
 
         if verbose
