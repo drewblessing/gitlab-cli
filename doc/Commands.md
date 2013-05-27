@@ -184,6 +184,7 @@ Owner ID: 2
 ```
 
 ### _Add a group_
+Only available to Administrators
 
 Usage 1: `gitlab group add [NAME] [PATH]`
 

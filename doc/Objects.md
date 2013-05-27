@@ -2,9 +2,14 @@
 
 ### _Project_
 
-GitlabCLI::Project
+GitlabCli::Group
 
-Attributes:
+* id - The numerical ID of the group
+* name - The name of the group
+* path - The namespace/path of the group
+* owner_id - The ID of the user that owns the group
+
+GitlabCli::Project
 
 * id - The numerical ID of the project
 * name - The name of the project
@@ -23,7 +28,7 @@ Attributes:
 
 ### _Snippet_
 
-GitlabCLI::Snippet
+GitlabCli::Snippet
 
 * id - The numerical ID of the snippet
 * title - The title of the snippet
@@ -37,7 +42,7 @@ GitlabCLI::Snippet
 
 ### _User_
 
-GitlabCLI::User
+GitlabCli::User
 
 * id - The numerical ID of the user
 * username - The short username of the user
