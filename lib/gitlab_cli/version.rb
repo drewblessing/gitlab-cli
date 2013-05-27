@@ -1,3 +1,3 @@
 module GitlabCli
-  VERSION = "2.0.xalpha"
+  VERSION = "2.1.0"
 end

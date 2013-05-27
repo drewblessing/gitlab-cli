@@ -112,7 +112,7 @@ module GitlabCli
 
       temp_file_path = "/tmp/snippet.%s" % [rand]
       File.open(temp_file_path, 'w') do |file| 
-        file.write(snippet_code.inspect) 
+        file.write(snippet_code) 
       end
       pre_digest = Digest::MD5.digest(File.read(temp_file_path))
 
@@ -223,7 +223,7 @@ module GitlabCli
       case e.response_code
       when 404
         ui.error "Unable to download snippet"
-        ui.error "Ensure project and snippet exist."
+        ui.error "Ensure project and snippet exist"
       else
         ui.error "Unable to download snippet"
         ui.handle_error e
@@ -234,7 +234,7 @@ module GitlabCli
       ui.handle_error e
 
     else
-      ui.success "Snippet file saved successfully.\n"
+      ui.success "Snippet file saved successfully"
     end
   end
 end

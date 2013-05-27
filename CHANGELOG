@@ -1,10 +1,13 @@
 2013-05-27 Drew Blessing
   * Issue 28: Implement better error checking
   * Issue 29: Test the error received when not allowed
+  * Issue 30: Snippet view shows double-quotes
+  * Issue 31: Snippet edit shows encoded text
   * Issue 32: Snippet is updated od edit, even if not changes are written
   * Issue 33: Delete snippet temp file when done
   * Issue 34: Strange error if you try to run snippet command on project that isn't accessible
   * Issue 35: Update projects/snippets tasks
+  * Issue 37: Add group support
 
 2013-05-17 Drew Blessing
   * Issue 26: Update docs for 2.0.0

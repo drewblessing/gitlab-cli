@@ -5,7 +5,42 @@ module GitlabCli
         "#{basename} #{task.formatted_usage(self, true, subcommand)}"
       end
 
-      ## INFO
+      # ADD
+      desc "add [NAME] [PATH]", "add a new group"
+      long_desc <<-D
+        Add a new group.  
+
+        $ gitlab group add "My Group" my-group
+
+        $ gitlab group add MyGroup mygroup
+      D
+      def add(name, path)
+        ui = GitlabCli.ui
+        begin
+          group = GitlabCli::Util::Group.create(name, path)
+
+        rescue ResponseCodeException => e
+          case e.response_code
+          when 404
+            ui.error "A group with that name and/or path already exists. Please choose a new name and/or path."
+          else
+            ui.error "Unable to create a group"
+            ui.handle_error e
+          end
+
+        rescue Exception => e
+          ui.error "Unable to create a group"
+          ui.handle_error e
+
+        else
+          ui.success "Group created."
+          ui.info "ID: %s" % [group.id]
+          ui.info "Name: %s" % [group.name]
+          ui.info "Path/Namespace: %s" % [group.path]
+        end
+      end
+
+      # INFO
       desc "info [GROUP_ID]", "view detailed info for a group"
       long_desc <<-D
         View detailed information about a group.\n
