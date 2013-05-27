@@ -28,6 +28,8 @@ GitlabCli::Util::Project
 
 \#get(project) - When given a project ID/full path with namespace, returns a Project object.
 
+\#create(name, description, branch, namespace_id, issues, merge_requests, wall, wiki, snippets) - When given all parameters, creates a new project and returns a Project object.  Namespace_id and group ID are synonymous.  Issues, merge_requests, wall, wiki, and snippets are boolean values.  Snippets can only be used in GitLab v5.3.0 or greater.
+
 \#get_project_path_with_namespace(project_id) - When given a project ID, returns the full path with namespace.
 
 ### _Snippets_

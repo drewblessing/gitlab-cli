@@ -40,7 +40,20 @@ Merge Requests enabled?: true
 Wall enabled?: false
 Wiki enabled?: false
 Created at: Mon Apr 01 18:42:38 UTC 2013
+```
 
+### _Add a project_
+Only [PROJECT_NAME] is required.
+
+Usage 1: `gitlab project add [PROJECT_NAME] [OPTIONS]`
+
+Usage 2: `gitlab project add "My Project" -d "This project is going to be awesome" -b master -n 2 --issues=true --wall=false --merge-requests=true --wiki=false`
+
+Example output:
+```
+Project "My Project" successfully created.
+ID: 35
+URL: https://gitlab.example.com/my-group/my-project
 ```
 
 ### _List all snippets for a project_
@@ -139,4 +152,45 @@ Usage 2: `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
 Using project ID: `gitlab snippet save 13 16 /path/for/new/file`
 
 Using project full namespace/project format: `gitlab snippet download user1/project1 16 /path/for/new/file`
+
+
+### _List all groups_
+
+Usage: `gitlab groups [OPTIONS]`
+
+Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
+
+Example output:
+```
+2:	Test Group
+4:	My Test Group
+5:	Special Group
+6:	My Group
+```
+
+### _View detailed information about a group_
+
+Usage: `gitlab group info [GROUP_ID]`
+
+Example output:
+```
+Group ID: 2
+Name: Test Group
+Path: test-group
+Owner ID: 2
+```
+
+### _Add a group_
+
+Usage 1: `gitlab group add [NAME] [PATH]`
+
+Usage 2: `gitlab group add "My awesome group" awesome-group`
+
+Example output:
+```
+Group created.
+ID: 15
+Name: My awesome group
+Path/Namespace: awesome-group
+```
 
