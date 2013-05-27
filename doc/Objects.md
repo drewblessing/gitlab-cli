@@ -1,6 +1,6 @@
 ## Objects
 
-### _Project_
+### _Group_
 
 GitlabCli::Group
 
@@ -8,6 +8,8 @@ GitlabCli::Group
 * name - The name of the group
 * path - The namespace/path of the group
 * owner_id - The ID of the user that owns the group
+
+### _Project_
 
 GitlabCli::Project
 
