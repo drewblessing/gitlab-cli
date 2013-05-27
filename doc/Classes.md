@@ -2,15 +2,29 @@
 
 The 'util' classes are what you should use to interact with Gitlab CLI as a library. 
 
+### _Groups_
+
+GitlabCli::Util::Groups
+
+\#get_all - Returns an array of Group objects.
+
+### _Group_
+
+GitlabCli::Util::Group
+
+\#get(group_id) - When given a group ID, returns a Group object.
+
+\#create(name, path) - When given a name and path, creates a group and returns a Group object.
+
 ### _Projects_
 
-GitlabCLI::Util::Projects
+GitlabCli::Util::Projects
 
 \#get_all - Returns an array of Project objects.
 
 ### _Project_
 
-GitlabCLI::Util::Project
+GitlabCli::Util::Project
 
 \#get(project) - When given a project ID/full path with namespace, returns a Project object.
 
@@ -18,13 +32,13 @@ GitlabCLI::Util::Project
 
 ### _Snippets_
 
-GitlabCLI::Utils::Snippets
+GitlabCli::Util::Snippets
 
 \#get_all(project) - When given a project ID/full path with namespace, returns an array of Snippet objects.
 
 ### _Snippet_
 
-GitlabCLI::Util::Snippet
+GitlabCli::Util::Snippet
 
 \#get(project, snippet) - When given a project ID/full path with namespace and a snippet ID, returns a Snippet object.
 
