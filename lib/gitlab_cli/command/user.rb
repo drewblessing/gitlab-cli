@@ -42,6 +42,49 @@ module GitlabCli
         end
       end
 
+      ## EDIT
+      desc "edit [USER]", "edit a user"
+      long_desc <<-D
+        Edit a user. This action is restricted to GitLab administrators.
+      D
+      option :email, :desc => "A new email address for the user", :type => :string, :aliases => ["-e"]
+      option :password, :desc => "A new password for the user", :type => :string, :aliases => ["-p"]
+      option :username, :desc => "The new username for the user", :type => :string, :aliases => ["-u"]
+      option :name, :desc => "Update the user's full name. Enclose in double-quotes to include first and last.", :type => :string, :aliases => ["-n"]
+      option :skype, :desc => "The Skype name for the user", :type => :string
+      option :linkedin, :desc => "The LinkedIn name for the user", :type => :string
+      option :twitter, :desc => "The user's Twitter handle", :type => :string
+      option :projects_limit, :desc => "The limit on the number of projects a user can create in their namespace", :type => :string
+      option :bio, :desc => "A user's biography", :type => :string
+      option :yes, :desc => "Update the user's information without asking for confirmation", :type => :boolean, :aliases => ["-y"]
+      def edit(user_id)
+        ui = GitlabCli.ui
+        begin
+          ui.warn "Changing a user's username can have unintended side effects! Personal repository git configs will need updated and project URLs will change." if !options['username'].nil?
+          response = ui.yes? "Are you sure you want to proceed with changing this user's username? (Yes\\No)" unless options['yes']
+          raise "User did not confirm the changes" unless options['yes'] || response
+
+          user = GitlabCli::Util::User.update user_id, options['email'], options['password'], options['username'], options['name'], options['skype'], options['linkedin'], options['twitter'], options['projects_limit'], options['bio']
+
+        rescue ResponseCodeException => e
+          case e.response_code
+          when 404
+            ui.error "Unable to edit user with ID %s" % [user_id]
+            ui.error "Either the user could not be found or the information you entered conflicts with an existing user."
+          else
+            ui.error "Unable to edit user with ID %s" % [user_id]
+            ui.handle_error e
+          end
+
+        rescue Exception => e
+          ui.error "Unable to edit user"
+          ui.handle_error e
+
+        else
+          ui.success "User \"%s\" <%s> was successfully updated." % [user.name, user.email]
+          ui.info "ID: %s" % [user.id]
+        end
+      end
 
       # INFO
       desc "info [USER]", "view detailed info for a user"

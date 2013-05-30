@@ -149,7 +149,7 @@ module GitlabCli
         ui = GitlabCli.ui
         begin
           response = GitlabCli.ui.yes? "Are you sure you want to delete this snippet? (Yes\\No)" unless options['yes']
-          exit unless options['yes'] || response
+          raise "User did not confirm the deletion" unless options['yes'] || response
 
           snippet = GitlabCli::Util::Snippet.delete(project, snippet)
 

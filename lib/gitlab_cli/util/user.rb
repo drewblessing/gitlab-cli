@@ -58,6 +58,32 @@ module GitlabCli
           GitlabCli::User.new(data['id'],data['username'],data['email'],data['name'],data['state'],data['created_at'],data['theme_id'],data['bio'],data['skype'],data['linkedin'],data['twitter'])
         end
       end
+
+      # Update 
+      def self.update(user_id, email=nil, password=nil, username=nil, name=nil, skype=nil, linkedin=nil, twitter=nil, projects_limit=nil, bio=nil)
+        url = "users/%s" % [user_id]
+        payload = {
+          :email              => email,
+          :password           => password,
+          :username           => username,
+          :name               => name,
+          :skype              => skype,
+          :linkedin           => linkedin,
+          :twitter            => twitter,
+          :projects_limit     => projects_limit,
+          :bio                => bio
+        }
+
+        begin 
+          response = GitlabCli::Util.rest 'put', url, payload
+        rescue Exception => e
+          raise e
+
+        else
+          data = JSON.parse(response)
+          GitlabCli::User.new(data['id'],data['username'],data['email'],data['name'],data['state'],data['created_at'],data['theme_id'],data['bio'],data['skype'],data['linkedin'],data['twitter'])
+        end
+      end
     end
   end
 end
