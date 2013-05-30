@@ -43,7 +43,7 @@ module GitlabCli
       end
 
       ## EDIT
-      desc "edit [USER]", "edit a user"
+      desc "edit [USER] [OPTIONS]", "edit a user"
       long_desc <<-D
         Edit a user. This action is restricted to GitLab administrators.
       D

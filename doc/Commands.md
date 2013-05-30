@@ -198,3 +198,27 @@ Name: My awesome group
 Path/Namespace: awesome-group
 ```
 
+## Users
+
+### _Edit a user_
+
+* Admins only
+
+Usage:
+  gitlab user edit [USER] [OPTIONS]
+
+* User must be specified as a user ID. Use `gitlab users` to get a list of users and their associated IDs.
+
+```
+Options:
+      [--linkedin=LINKEDIN]              # The LinkedIn name for the user
+  -e, [--email=EMAIL]                    # A new email address for the user
+      [--twitter=TWITTER]                # The user's Twitter handle
+      [--projects-limit=PROJECTS_LIMIT]  # The limit on the number of projects a user can create in their namespace
+      [--bio=BIO]                        # A user's biography
+  -y, [--yes]                            # Update the user's information without asking for confirmation
+  -u, [--username=USERNAME]              # The new username for the user
+  -p, [--password=PASSWORD]              # A new password for the user
+  -n, [--name=NAME]                      # Update the user's full name. Enclose in double-quotes to include first and last.
+      [--skype=SKYPE]                    # The Skype name for the user
+```
