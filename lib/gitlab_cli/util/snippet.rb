@@ -13,7 +13,7 @@ module GitlabCli
 
         else
           data = JSON.parse(response)
-          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],data['author'])
         end
       end
 
@@ -47,7 +47,7 @@ module GitlabCli
 
         else
           data = JSON.parse(response)
-          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],data['author'])
         end
       end
 
@@ -81,7 +81,7 @@ module GitlabCli
 
         else
           data = JSON.parse(response)
-          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],id,data['author'])
+          GitlabCli::Snippet.new(data['id'],data['title'],data['file_name'],data['expires_at'],data['updated_at'],data['created_at'],data['author'])
         end
       end
 

@@ -27,7 +27,7 @@ module GitlabCli
 
     private
     def parse_owner(owner)
-      GitlabCli::User.new(owner['id'],owner['username'],owner['email'],owner['name'],owner['blocked'],owner['created_at'])
+      GitlabCli::User.new(owner['id'],owner['username'],owner['email'],owner['name'],owner['state'],owner['created_at'])
     end
     
   end

@@ -24,7 +24,7 @@ module GitlabCli
 
     private
     def parse_author(author)
-      GitlabCli::User.new(author['id'],author['username'],author['email'],author['name'],author['blocked'],author['created_at'])
+      GitlabCli::User.new(author['id'],author['username'],author['email'],author['name'],author['state'],author['created_at'])
     end
   end
 end

@@ -145,6 +145,47 @@ module GitlabCli
       end
     end
 
+    desc "users [OPTIONS]", "list users"
+    long_desc <<-D
+      Get a list of users.\n
+    D
+    option :nopager, :desc => "Turn OFF pager output one time for this command", :required => false, :type => :boolean
+    option :pager, :desc => "Turn ON pager output one time for this command", :required => false, :type => :boolean
+    def users
+      ui = GitlabCli.ui
+      begin
+        raise "Cannot specify --nopager and --pager options together. Choose one." if options['pager'] && options['nopager']
+
+        users = GitlabCli::Util::Users.get_all
+        formatted_users = ""
+        pager = ENV['pager'] || 'less'
+
+        users.each do |u|
+          formatted_users << "%s:\t%s <%s>\n" % [u.id, u.name, u.email]
+        end
+      
+      rescue Exception => e
+        ui.error "Unable to get users"
+        ui.handle_error e
+
+      else
+        if users.size == 0
+          ui.info "There are no users"
+
+        else
+          if ((GitlabCli::Config[:display_results_in_pager] && !options['nopager']) || options['pager'])
+            unless system("echo %s | %s" % [Shellwords.escape(formatted_users), pager])
+              raise "Problem displaying users in pager"
+            end
+
+          else 
+            ui.info formatted_users
+
+          end
+        end
+      end
+    end
+
     desc "group [SUBCOMMAND]", "perform an action on a group"
     long_desc <<-D
       Perform an action on a group. To see available subcommands use 'gitlab group help.' 
@@ -162,5 +203,11 @@ module GitlabCli
       Perform an action on a snippet. To see available subcommands use 'gitlab snippet help.'
     D
     subcommand "snippet", GitlabCli::Command::Snippet
+    
+    desc "user [SUBCOMMAND]", "perform an action on a user"
+    long_desc <<-D
+      Perform an action on a user. To see available subcommands use 'gitlab user help.'
+    D
+    subcommand "user", GitlabCli::Command::User
   end
 end

@@ -3,9 +3,11 @@ module GitlabCli
     autoload :Groups,        'gitlab_cli/util/groups'
     autoload :Projects,      'gitlab_cli/util/projects'
     autoload :Snippets,      'gitlab_cli/util/snippets'
+    autoload :Users,         'gitlab_cli/util/users'
     autoload :Group,         'gitlab_cli/util/group'
     autoload :Project,       'gitlab_cli/util/project'
     autoload :Snippet,       'gitlab_cli/util/snippet'
+    autoload :User,          'gitlab_cli/util/user'
 
     autoload :RestClient,    'rest-client'
     autoload :JSON,          'json'
