@@ -200,7 +200,38 @@ Path/Namespace: awesome-group
 
 ## Users
 
-### _Edit a user_
+### _Add a user_
+
+* Admins only
+
+Usage
+
+```
+gitlab user add [EMAIL] [OPTIONS] -n, --name=NAME -p, --password=PASSWORD -u, --username=USERNAME
+```
+
+* Required parameters include --name, --password, and --username
+
+```
+Options:
+      [--linkedin=LINKEDIN]              # The LinkedIn name for the user
+      [--twitter=TWITTER]                # The user's Twitter handle
+      [--projects-limit=PROJECTS_LIMIT]  # The limit on the number of projects a user can create in their namespace
+      [--bio=BIO]                        # A user's biography
+  -u, --username=USERNAME                # The username for the user
+  -p, --password=PASSWORD                # A password for the new user
+  -n, --name=NAME                        # The user's full name. Enclose in double-quotes to include first and last.
+      [--skype=SKYPE]                    # The Skype name for the user
+```
+
+Example output
+
+```
+User "Test User" <test@example.com> created successfully
+ID: 3
+```
+
+### _Edit/Update a user_
 
 * Admins only
 
@@ -208,7 +239,8 @@ Usage
 
 `gitlab user edit [USER] [OPTIONS]`
 
-* User must be specified as a user ID. Use `gitlab users` to get a list of users and their associated IDs.
+* [USER] must be specified as a user ID. Use `gitlab users` to get a list of users and their associated IDs.
+* Changing a user's username can have unintended side effects! Personal repository git configs will need updated and project URLs will change.
 
 ```
 Options:
@@ -222,4 +254,41 @@ Options:
   -p, [--password=PASSWORD]              # A new password for the user
   -n, [--name=NAME]                      # Update the user's full name. Enclose in double-quotes to include first and last.
       [--skype=SKYPE]                    # The Skype name for the user
+```
+
+Example output
+
+```
+User "Test User" <test@example.com> was successfully updated.
+ID: 3
+
+```
+
+### _View user information_
+
+Usage
+
+`gitlab user info [USER]`
+
+* [USER] must be specified as a user ID. Use `gitlab users` to get a list of users and their associated IDs.
+* If user provider is "Internal" no external UID attribute will be displayed.  Examples of external providers include LDAP and other omniauth providers.
+* If no [USER] is specified the command will return information for the current user. This is the user configured in the Gitlab CLI configuration file via the private token.
+* If no [USER] is specified you will see a warning message printed - `No user provided. Showing information for my user...`
+
+Example output
+
+```
+User ID: 3
+Full Name: Test User
+Email Address: test@example.com
+Username: test.user
+Created at: Fri May 17 19:48:39 UTC 2013
+Biography: My awesome bio!!
+State: active
+Theme: Classic
+Provider: Internal
+External UID: test.user.external
+Skype: skype_name
+LinkedIn: linkedin_name
+Twitter: @twitter_name
 ```
