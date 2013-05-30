@@ -204,8 +204,9 @@ Path/Namespace: awesome-group
 
 * Admins only
 
-Usage:
-  gitlab user edit [USER] [OPTIONS]
+Usage
+
+`gitlab user edit [USER] [OPTIONS]`
 
 * User must be specified as a user ID. Use `gitlab users` to get a list of users and their associated IDs.
 
