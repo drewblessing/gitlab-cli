@@ -1,7 +1,12 @@
-## Commands
+# Commands
 Note: All command results are subject to user authorization.  For example, if the command says it will return all projects it will return all projects...that the user is able to see.
 
 Note2: Anywhere you see [PROJECT] you can either specify the full namespace/project name for the project or you can provide the project ID.  Both can be obtained by running the first command below.
+
+[Projects](#projects)
+[Snippets](#snippets)
+[Groups](#groups)
+[Users](#users)
 
 ## Projects
 
