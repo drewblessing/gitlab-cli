@@ -3,13 +3,25 @@ Note: All command results are subject to user authorization.  For example, if th
 
 Note2: Anywhere you see [PROJECT] you can either specify the full namespace/project name for the project or you can provide the project ID.  Both can be obtained by running the first command below.
 
+## Projects
+
 ### _List all projects_
 
-Usage: `gitlab projects [OPTIONS]`
+Usage
 
-Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
+`gitlab projects [OPTIONS]`
 
-Example output:
+* Use the pager options to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+
+Options
+
+```
+  [--nopager]  # Turn OFF pager output one time for this command
+  [--pager]    # Turn ON pager output one time for this command
+```
+
+Example output
+
 ```
 3:	globalproject1
 4:	namespace1/project2
@@ -18,14 +30,14 @@ Example output:
 13:	user1/project1
 ```
 
-Note: As of v1.1.0, this command can output in the system pager or `less` to improve readability when many results are shown. Set configuration `display_results_in_pager` command to `true` to enable this functionality.
-Use --nopager or --pager to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+### _View information about a project_
 
-### _View detailed information about a project_
+Usage
 
-Usage: `gitlab project info [PROJECT]`
+`gitlab project info [PROJECT]`
 
-Example output:
+Example output
+
 ```
 Project ID: 3
 Name: My Project
@@ -33,7 +45,7 @@ Path w/ Namespace: namespace1/myproject
 Project URL: https://gitlab.example.com/namespace1/myproject
 Description: This is my awesome repo!
 Default Branch: master
-Owner: Drew Blessing <drew.blessing@example.com>
+Owner: John Doe <john.doe@example.com>
 Public?: false
 Issues enabled?: false
 Merge Requests enabled?: true
@@ -43,31 +55,49 @@ Created at: Mon Apr 01 18:42:38 UTC 2013
 ```
 
 ### _Add a project_
-Only [PROJECT_NAME] is required.
 
-Usage 1: `gitlab project add [PROJECT_NAME] --description=DESCRIPTION --branch=DEFAULT_BRANCH --namespace-id=NAMESPACE_ID --issues=BOOLEAN --merge_requests=BOOLEAN --wall=BOOLEAN --wiki=BOOLEAN`
+Usage
 
-Usage 2: 
+`gitlab project add [PROJECT_NAME] [OPTIONS]`
+
+* [PROJECT_NAME] is a required parameter
+
 ```
-gitlab project add "My Project" -d "This project is going to be awesome" -b master -n 2 --issues=true --wall=false --merge-requests=true --wiki=false
+Options:
+          [--wiki]                       # Enable wiki for the project
+  -b, [--branch=BRANCH]                  # The project's default branch
+  -d, [--description=DESCRIPTION]        # The project's description
+          [--snippets]                   # Enable snippets for the project
+  -g, -n, [--namespace-id=NAMESPACE_ID]  # The namespace ID this project should be added to. Namespace ID is synonymous with group ID
+          [--issues]                     # Enable issues for the project
+          [--wall]                       # Enable issues for the project
+          [--merge-requests]             # Enable merge_requests for the project
 ```
 
-Example output:
+Example output
+
 ```
 Project "My Project" successfully created.
 ID: 35
 URL: https://gitlab.example.com/my-group/my-project
 ```
 
-### _List all snippets for a project_
+## Snippets
 
-Usage: `gitlab snippets [PROJECT] [OPTIONS]`
+### _List snippets for a project_
 
-Using project ID: `gitlab snippets 13`
+Usage
 
-Using project full namespace/project format: `gitlab snippets user1/project1`
+`gitlab snippets [PROJECT] [OPTIONS]`
 
-Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
+* Use the pager options to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+
+Options
+
+```
+  [--nopager]  # Turn OFF pager output one time for this command
+  [--pager]    # Turn ON pager output one time for this command
+```
 
 Example output:
 ```
@@ -75,40 +105,37 @@ Example output:
 16:	README - README.md
 ```
 
-Note: As of v1.1.0, this command can output in the system pager or `less` to improve readability when many results are shown. Set configuration `display_results_in_pager` command to `true` to enable this functionality.
-Use --nopager or --pager to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+### _View a snippet_
 
-### _View a snippet (Uses default pager or "less")_
+Usage
 
-Usage: `gitlab snippet view [PROJECT] [SNIPPET_ID]`
+`gitlab snippet view [PROJECT] [SNIPPET_ID]`
 
-Using project ID: `gitlab snippet view 13 16`
+* Displays the snippet in the system pager, as specified by `pager` ENV variable, or `less`.
 
-Using project full namespace/project format: `gitlab snippet view user1/project1 16`
+### _Edit a snippet_
 
-### _Edit a snippet (Users default editor or "vi")_
+Usage
 
-Usage: `gitlab snippet edit [PROJECT] [SNIPPET_ID]`
+`gitlab snippet edit [PROJECT] [SNIPPET_ID]`
 
-Using project ID: `gitlab snippet edit 13 16`
+* The snippet will open in the system editor, as specified by `editor` ENV variable, or `vi`.
 
-Using project full namespace/project format: `gitlab snippet edit user1/project1 16`
+Example output
 
-Example output:
 ```
 Snippet updated.
- URL: https://gitlab.example.com/user1/project1/snippets/16
+URL: https://gitlab.example.com/user1/project1/snippets/16
 ```
 
-### _View detailed information about a snippet_
+### _View information about a snippet_
 
-Usage :`gitlab snippet info [PROJECT] [SNIPPET_ID]`
+Usage 
 
-Using project ID: `gitlab snippet info 13 16`
+`gitlab snippet info [PROJECT] [SNIPPET_ID]`
 
-Using project full namespace/project format: `gitlab snippet info user1/project1 16`
+Example output
 
-Example output:
 ```
 Snippet ID: 16
 Title: README
@@ -121,49 +148,84 @@ Expires at: Never
 
 ### _Add a snippet_
 
-Usage 1: `gitlab snippet add [PROJECT] [FILE] -t [TITLE] -n [FILE_NAME]`
+Usage
 
-Usage 2: `cat [FILE] | gitlab snippet add [PROJECT] -t [TITLE] -n [FILE_NAME]`
+```
+gitlab snippet add [PROJECT] [FILE] [OPTIONS] -n, -f, --file-name=FILE_NAME -t, --title=TITLE
+```
 
-Using project ID: `gitlab snippet add 13 16 /path/to/file -t "Awesome title" -n file.txt`
+* All options are required
 
-Using project full namespace/project format: `gitlab snippet add user1/project1 16 /path/to/file -t "Awesome title" -n file.txt``
+Options
 
-Example output:
+```
+  -t, --title=TITLE              # The title to use for the new snippet
+  -n, -f, --file-name=FILE_NAME  # A file name for this snippet
+```
+
+Example output
+
 ```
 Snippet created.
 ID: 20
 URL: https://gitlab.example.com/user1/project1/snippets/20
 ```
 
-### _Delete a snippet (Asks for confirmation)_
-Use -y flag to bypass confirmation. Use at your own risk.
+### _Delete a snippet_
 
-Usage: `gitlab snippet delete [PROJECT] [SNIPPET_ID]`
+Usage
 
-Using project ID: `gitlab snippet delete 13 16`
+`gitlab snippet delete [PROJECT] [SNIPPET_ID]`
 
-Using project full namespace/project format: `gitlab snippet delete user1/project1 16`
+* Asks for user confirmation before deleting.
+* Use -y flag to bypass confirmation. Use at your own risk.
 
-### _Save a snippet to your local filesystem_
-Note: The "save" subcommand is an alias of "download." Both have the same effect.
+Options
 
-Usage 1: `gitlab snippet download [PROJECT] [SNIPPET_ID] [FILE]`
+```
+  -y, [--yes]  # Delete without asking for confirmation
+```
 
-Usage 2: `gitlab snippet save [PROJECT] [SNIPPET_ID] [FILE]`
+Example output
 
-Using project ID: `gitlab snippet save 13 16 /path/for/new/file`
+```
+Successfully deleted the snippet.
+```
 
-Using project full namespace/project format: `gitlab snippet download user1/project1 16 /path/for/new/file`
+### _Save/Download a snippet to your local filesystem_
 
+Usage
+
+`gitlab snippet download|save [PROJECT] [SNIPPET_ID] [FILE]`
+
+* The "save" subcommand is an alias of "download." Both have the same effect.
+
+Example output
+
+```
+Snippet file saved successfully.
+```
+
+## Groups
 
 ### _List all groups_
 
-Usage: `gitlab groups [OPTIONS]`
+Usage
 
-Options: `--nopager`, `--pager` to turn paging off or on one time (See note below example output)
+`gitlab groups [OPTIONS]`
 
-Example output:
+* Use the pager options to temporarily turn paging off or on respectively.  These options effectively overrides the true/false setting for `display_results_in_pager` configuration setting.
+* The Group ID displayed by this command is the same ID you can use when creating a project to specify the namespace a project should be in.  This command may be helpful in determining the appropriate namespace ID for use when creating a project.
+
+Options
+
+```
+  [--nopager]  # Turn OFF pager output one time for this command
+  [--pager]    # Turn ON pager output one time for this command
+```
+
+Example output
+
 ```
 2:	Test Group
 4:	My Test Group
@@ -171,11 +233,16 @@ Example output:
 6:	My Group
 ```
 
-### _View detailed information about a group_
+### _View information about a group_
 
-Usage: `gitlab group info [GROUP_ID]`
+Usage
 
-Example output:
+`gitlab group info [GROUP_ID]`
+
+* Group ID is the same as Namespace ID.
+
+Example output
+
 ```
 Group ID: 2
 Name: Test Group
@@ -184,11 +251,17 @@ Owner ID: 2
 ```
 
 ### _Add a group_
-Only available to Administrators
 
-Usage 1: `gitlab group add [NAME] [PATH]`
+Usage
 
-Usage 2: `gitlab group add "My awesome group" awesome-group`
+* Admins only
+
+Usage
+
+
+`gitlab group add [NAME] [PATH]`
+
+* [PATH] will become the namespace for any project within this group. As such, it will also be associated with all URLs for projects within the namespace.
 
 Example output:
 ```
@@ -261,7 +334,6 @@ Example output
 ```
 User "Test User" <test@example.com> was successfully updated.
 ID: 3
-
 ```
 
 ### _View user information_
