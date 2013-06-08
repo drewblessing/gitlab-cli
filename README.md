@@ -2,13 +2,9 @@
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
-## Version 2.0.0 
+## Current version is 2.0.0. 
 
-This version contains breaking changes!!
-
-* Now packaged as a gem! 
-* Configuration file loaded from user's home directory - ~/.gitlab.yml
-* Easier to use within your Ruby scripts/applications (see "Use as a library")
+This branch (master) represents current development efforts and may not be 100% stable. Please install via RubyGems and/or checkout tag v2.0.0.
 
 ## GitLab Versions
 
