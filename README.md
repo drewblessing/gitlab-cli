@@ -1,5 +1,9 @@
 # _GitLab CLI Tool_
 
+## NOTE ##
+
+This may not work with GitLab 6.x. Development is ongoing and a new version will be posted shortly. What's more, the new version will be drastically refactored and will be backed by rspec tests. This will ensure that future versions can be released quicker and with confidence. Thanks for your patience.
+
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI. At this time the tool only allows interaction with snippets._
 
 ## Current version is 2.0.0. 
