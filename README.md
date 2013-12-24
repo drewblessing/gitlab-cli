@@ -73,7 +73,7 @@ _Required system packages_
 
 _How can I find the private token for my user?_
 
-Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  Copy the private token from the box and paste into your config.  
+Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  Copy the private token from the box and paste into your config, which should be located at `~/.gitlab.yml`.  
 
 _How can I add the repo bin path to my environment PATH variable?_
 
