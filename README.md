@@ -4,7 +4,7 @@ _Many people prefer to work from the CLI when possible. This tool aims to bring 
 
 ## NOTE ##
 
-This may not work with GitLab 6.x. Development is ongoing and a new version will be posted shortly. What's more, the new version will be drastically refactored and will be backed by rspec tests. This will ensure that future versions can be released quicker and with confidence. Thanks for your patience.
+This may not work with GitLab 6.x+. This project is no longer maintained. For a fully-functional, maintained CLI tool look at http://narkoz.github.io/gitlab/
 
 ## Current version is 2.0.0. 
 
