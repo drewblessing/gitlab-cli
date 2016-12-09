@@ -1,3 +1,7 @@
+**NOTICE: This project is no longer maintained. Please check out its successor at https://github.com/NARKOZ/gitlab/**
+
+
+
 # _GitLab CLI Tool_
 
 _Many people prefer to work from the CLI when possible. This tool aims to bring some of the GitLab functionality into the CLI to avoid repeated trips to the web UI._
