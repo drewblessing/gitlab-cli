@@ -51,13 +51,13 @@ _How do I get started?_
 
 Install from rubygems (Recommended)
 
-1. _`gem install gitlab_cli`_
+1. `gem install gitlab_cli`
 
 Install from the repo (requires rake and bundler).
 
-1. _Clone the repo._
-2. _`rake build`_
-3. _`rake install` (Requires root privileges)._
+1. Clone the repo.
+2. `rake build`
+3. `rake install` (Requires root privileges).
 
 You now have access to the `gitlab` command.
 
@@ -81,7 +81,7 @@ Login to your GitLab web UI, go to 'My Profile', and select the 'Account' tab.  
 
 _How can I add the repo bin path to my environment PATH variable?_
 
-Place it in your ~/.bash_profile file.  You should end up with something like this:
+Place it in your ~/.bash_profile file.  You should end up with something like this:  
 `export PATH=$PATH:/path/to/gitlab-cli/repo/bin/`
 
 ## How to use (Commands) 
@@ -100,8 +100,8 @@ Now that Gitlab CLI is distributed as a gem it is increasingly easy to use in yo
 
 If you encounter issues with this project, please find help via one of these avenues.
 
-1. _IRC: #gitlab on Freenode - nick dblessing_
-2. _GitHub Issues: Open a new issue here on GitHub_
+1. IRC: #gitlab on Freenode - nick dblessing
+2. GitHub Issues: Open a new issue here on GitHub
 
 ## Contributing changes
 
